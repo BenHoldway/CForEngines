@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/RotatingMovementComponent.h"
 #include "FirstActor.generated.h"
 
 UCLASS()
@@ -25,6 +26,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UArrowComponent> _Arrow;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<URotatingMovementComponent> _Rotate;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

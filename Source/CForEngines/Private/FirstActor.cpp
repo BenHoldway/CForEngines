@@ -3,6 +3,8 @@
 
 #include "FirstActor.h"
 
+#include "GameFramework/RotatingMovementComponent.h"
+
 
 // Sets default values
 AFirstActor::AFirstActor()
@@ -15,6 +17,8 @@ AFirstActor::AFirstActor()
 
 	_Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
 	_Arrow -> SetupAttachment(_Root);
+
+	_Rotate = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotate"));
 	
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
