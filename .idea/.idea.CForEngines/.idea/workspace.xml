@@ -12,13 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/PC_Debug.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/PC_Debug.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyFirstActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyFirstActor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/4L/ZHTCR4PY98IAGC0W1VV9II.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.h" afterDir="false" />
     </list>
@@ -50,6 +50,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -510,6 +511,7 @@
       <workItem from="1727552717468" duration="2334000" />
       <workItem from="1727556429427" duration="1635000" />
       <workItem from="1727687883818" duration="5172000" />
+      <workItem from="1727856916280" duration="9261000" />
     </task>
     <servers />
   </component>
@@ -519,5 +521,16 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Engine/Private/GameplayStatics.cpp</url>
+          <line>61</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

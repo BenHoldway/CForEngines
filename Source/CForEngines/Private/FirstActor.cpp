@@ -3,31 +3,38 @@
 
 #include "FirstActor.h"
 
-#include "GameFramework/RotatingMovementComponent.h"
+#include "Components/BoxComponent.h"
+//#include "GameFramework/RotatingMovementComponent.h"
 
 
-// Sets default values
 AFirstActor::AFirstActor()
 {
-	_Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-	RootComponent = _Root;
+	_Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	RootComponent = _Collider;
 
-	_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	_Mesh -> SetupAttachment(_Root);
+	_Meesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	_Meesh -> SetupAttachment(RootComponent);
 
 	_Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
-	_Arrow -> SetupAttachment(_Root);
+	_Arrow -> SetupAttachment(RootComponent);
 
-	_Rotate = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotate"));
+	//_Rotate = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotate"));
 	
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AFirstActor::Handle_ColliderHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	//UE_LOG(LogTemp, Display, TEXT("I hit"));
+	
 }
 
 // Called when the game starts or when spawned
 void AFirstActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_Collider->OnComponentHit.AddUniqueDynamic(this, &AFirstActor::Handle_ColliderHit);
 	
 }
 
