@@ -31,6 +31,8 @@ public:
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
 
 protected:
+	void BeginPlay() override;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> _Camera;
 
@@ -39,4 +41,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UInputMappingContext> _MappingContext;
+
+private:
+	UFUNCTION()
+	void Handle_HealthDead(AController* causer);
+	UFUNCTION()
+	void Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth);
 };

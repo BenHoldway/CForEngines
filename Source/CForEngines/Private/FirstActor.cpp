@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "FirstActor.h"
 
+#include "HealthComponent.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 //#include "GameFramework/RotatingMovementComponent.h"
 
 
@@ -23,13 +22,6 @@ AFirstActor::AFirstActor()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AFirstActor::Handle_ColliderHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	//UE_LOG(LogTemp, Display, TEXT("I hit"));
-	
-}
-
-// Called when the game starts or when spawned
 void AFirstActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -38,9 +30,10 @@ void AFirstActor::BeginPlay()
 	
 }
 
-// Called every frame
-void AFirstActor::Tick(float DeltaTime)
+void AFirstActor::Handle_ColliderHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	Super::Tick(DeltaTime);
+	TObjectPtr<UHealthComponent> _Health = OtherActor->FindComponentByClass<UHealthComponent>();
+	if(_Health == nullptr) { return; }
+	UGameplayStatics::ApplyDamage(this, 10.f, nullptr, this, UDamageType::StaticClass());
 }
 

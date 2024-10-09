@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "HealthComponent.h"
 
 
@@ -8,6 +5,7 @@ UHealthComponent::UHealthComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	_MaxHealth = 100.0f;
+	_CurrentHealth = 0.0f;
 }
 
 
@@ -25,10 +23,12 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
 	const float change = FMath::Min(_CurrentHealth, Damage);
 	_CurrentHealth -= change;
 
-	UE_LOG(LogTemp, Display, TEXT("Damaged for %f, %f health remaining"), change, _CurrentHealth);
+	OnDamaged.Broadcast(_CurrentHealth, _MaxHealth, change);
+	
 	if(_CurrentHealth == 0.0f)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Dead time"));
+		OnDead.Broadcast(InstigatedBy);
+		GetOwner()->Destroy();
 	}
 }
 
