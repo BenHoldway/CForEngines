@@ -12,29 +12,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GM_FPS.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GM_FPS.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule_Target.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Target.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/GameRule.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/GameRule_Target.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Target.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Projectile.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Weapon_Base.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Weapon_HitScan.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Weapon_Projectile.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Projectile.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Weapon_Base.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Weapon_HitScan.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Weapon_Projectile.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/GM_C4E_Project.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/GM_C4E_Project.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IMC_PlayerControls.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/IMC_PlayerControls.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyPC_FPS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyP_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyP_FPS.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_PActor_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_PActor_FPS.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_PController_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_PController_FPS.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/3/GG/3P74FVXGL6C9RD7C1EA72B.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/3/GG/3P74FVXGL6C9RD7C1EA72B.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/AY/02U9INWHSK6L86AJ1U1BDM.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/AY/02U9INWHSK6L86AJ1U1BDM.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/6Z/1NTHFQUSCLRZOQ5EL1LXRK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/6Z/1NTHFQUSCLRZOQ5EL1LXRK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/FirstActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/FirstActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/GM_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GM_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/GM_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/GM_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule_Target.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/GameRule_Target.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/HealthComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Inputable.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Inputable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/PC_Debug.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/PC_Debug.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/PC_Debug.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/PC_Debug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/PC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/PC_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/PC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/PC_FPS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/P_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/P_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/P_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/P_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/P_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/P_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Target.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Target.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -529,6 +533,7 @@
       <workItem from="1728289201419" duration="7823000" />
       <workItem from="1728297512888" duration="1330000" />
       <workItem from="1728461358648" duration="9312000" />
+      <workItem from="1728893332471" duration="10023000" />
     </task>
     <servers />
   </component>

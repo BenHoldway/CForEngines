@@ -1,4 +1,4 @@
-#include "CForEngines/Public/GameRule.h"
+#include "GameRule.h"
 
 UGameRule::UGameRule()
 {
