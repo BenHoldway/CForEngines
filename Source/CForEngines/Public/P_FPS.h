@@ -11,6 +11,8 @@ class UCharacterMovementComponent;
 class UCameraComponent;
 class UCapsuleComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnDamagedSignature, float, newHealth, float, maxHealth, float, changeInHealth);
+
 UCLASS()
 class CFORENGINES_API AP_FPS : public ACharacter, public IInputable
 {
@@ -27,6 +29,9 @@ public:
 	virtual void Input_FireReleased_Implementation() override;
 
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
+
+	UPROPERTY(BlueprintAssignable)
+	FPawnDamagedSignature OnPawnDamaged;
 
 protected:
 	void BeginPlay() override;

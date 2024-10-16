@@ -14,7 +14,6 @@ void UHealthComponent::BeginPlay()
 	Super::BeginPlay();
 	_CurrentHealth = _MaxHealth;
 	GetOwner()->OnTakeAnyDamage.AddUniqueDynamic(this, &UHealthComponent::DamageTaken);
-	
 }
 
 void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType,

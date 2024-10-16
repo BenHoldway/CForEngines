@@ -24,8 +24,6 @@ void UTarget::BeginPlay()
 	}
 	_Health->OnDead.AddUniqueDynamic(this, &UTarget::Handle_HealthDead);
 
-	//TODO: Add bind to gamerule_target request for census
-
 	OnTargetRegister.Broadcast(this);
 }
 

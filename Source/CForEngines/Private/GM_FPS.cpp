@@ -1,6 +1,7 @@
 #include "GM_FPS.h"
 
 #include "GameRule.h"
+#include "PC_FPS.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
  
@@ -93,12 +94,15 @@ bool AGM_FPS::ReadyToStartMatch_Implementation() { return false; }
  
 bool AGM_FPS::ReadyToEndMatch_Implementation() { return false; }
 
-void AGM_FPS::Handle_GameRuleCompleted()
+void AGM_FPS::Handle_GameRulePointsScored(AController* scorer, int points)
 {
-	
+	if(UKismetSystemLibrary::DoesImplementInterface(scorer, UControllable::StaticClass()))
+	{
+		IControllable::Execute_AddPoints(scorer, points);
+	}
 }
 
-void AGM_FPS::Handle_GameRulePointsScored(AController* scorer, int points)
+void AGM_FPS::Handle_GameRuleCompleted()
 {
 	
 }

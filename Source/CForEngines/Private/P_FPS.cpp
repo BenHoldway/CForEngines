@@ -1,11 +1,10 @@
 #include "P_FPS.h"
 
 #include "HealthComponent.h"
+#include "IAutomationControllerManager.h"
 #include "Weapon_Base.h"
 #include "Camera/CameraComponent.h"
 
-
-// Sets default values
 AP_FPS::AP_FPS()
 {
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -22,6 +21,8 @@ void AP_FPS::BeginPlay()
 
 	_Health->OnDead.AddUniqueDynamic(this, &AP_FPS::Handle_HealthDead);
 	_Health->OnDamaged.AddUniqueDynamic(this, &AP_FPS::Handle_HealthDamaged);
+
+	Handle_HealthDamaged(0.0f, 1.f, 1.f);
 
 	if(_DefaultWeapon)
 	{
@@ -86,6 +87,6 @@ void AP_FPS::Handle_HealthDead(AController* causer)
 
 void AP_FPS::Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth)
 {
-	
+	OnPawnDamaged.Broadcast(currentHealth, maxHealth, changedHealth);
 }
 

@@ -2,7 +2,27 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Inputable.h"
+#include "P_FPS.h"
+#include "Widget_HUD.h"
 #include "Kismet/KismetSystemLibrary.h"
+
+
+void APC_FPS::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
+	{
+		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
+	}
+	
+	if(_HUDWidgetClass)
+	{
+		_HUDWidget = CreateWidget<UWidget_HUD, APC_FPS*>(this, _HUDWidgetClass);
+		_HUDWidget->AddToViewport();
+	}
+}
+
 
 void APC_FPS::SetupInputComponent()
 {
@@ -100,4 +120,15 @@ void APC_FPS::OnPossess(APawn* InPawn)
 			subsystem->AddMappingContext(IInputable::Execute_GetMappingContext(InPawn), 0);
 		}
 	}
+}
+
+void APC_FPS::AddPoints_Implementation(int points)
+{
+	_Score += points;
+	_HUDWidget->UpdateScore(_Score);
+}
+
+void APC_FPS::Damaged(float currentHealth, float maxHealth, float changedHealth)
+{
+	_HUDWidget->UpdateHealth(currentHealth);
 }
