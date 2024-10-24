@@ -11,6 +11,7 @@ AFirstActor::AFirstActor()
 {
 	_Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	RootComponent = _Collider;
+	_Collider->OnComponentHit.AddUniqueDynamic(this, &AFirstActor::Handle_ColliderHit);
 
 	_Meesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	_Meesh -> SetupAttachment(RootComponent);
@@ -21,18 +22,11 @@ AFirstActor::AFirstActor()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AFirstActor::BeginPlay()
-{
-	Super::BeginPlay();
-
-	_Collider->OnComponentHit.AddUniqueDynamic(this, &AFirstActor::Handle_ColliderHit);
-	
-}
-
 void AFirstActor::Handle_ColliderHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	TObjectPtr<UHealthComponent> _Health = OtherActor->FindComponentByClass<UHealthComponent>();
-	if(_Health == nullptr) { return; }
-	UGameplayStatics::ApplyDamage(this, 10.f, nullptr, this, UDamageType::StaticClass());
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, 10.f, nullptr, this, UDamageType::StaticClass());
+	}
 }
 

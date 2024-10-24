@@ -14,16 +14,18 @@ class AP_FPS;
 void APC_FPS::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
-	{
-		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
-	}
 	
 	if(_HUDWidgetClass)
 	{
 		_HUDWidget = CreateWidget<UWidget_HUD, APC_FPS*>(this, _HUDWidgetClass);
 		_HUDWidget->AddToViewport();
+	}
+
+	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
+	{
+		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
+		//currentPawn->GetComponentByClass<UHealthComponent>();
+		//_HUDWidget->UpdateHealth(100.0f);
 	}
 }
 

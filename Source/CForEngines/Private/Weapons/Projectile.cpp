@@ -1,6 +1,5 @@
 #include "Weapons/Projectile.h"
 
-#include "Character/Components/Inputable.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,6 +11,9 @@ AProjectile::AProjectile()
 	RootComponent = _Collider;
 	_Collider->SetCollisionProfileName(TEXT("Projectile"));
 	_Collider->OnComponentHit.AddUniqueDynamic(this, &AProjectile::Handle_Hit);
+
+	_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	_Mesh -> SetupAttachment(RootComponent);
 
 	_ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
 	_ProjectileMovement->UpdatedComponent = _Collider;
@@ -31,8 +33,8 @@ void AProjectile::Handle_Hit(UPrimitiveComponent* HitComponent, AActor* OtherAct
 		if(OtherComp->IsSimulatingPhysics())
 		{
 			OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-			Destroy();
 		}
+		Destroy();
 	}
 }
 
