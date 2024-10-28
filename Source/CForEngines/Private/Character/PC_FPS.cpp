@@ -24,8 +24,6 @@ void APC_FPS::BeginPlay()
 	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
 	{
 		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
-		//currentPawn->GetComponentByClass<UHealthComponent>();
-		//_HUDWidget->UpdateHealth(100.0f);
 	}
 }
 
