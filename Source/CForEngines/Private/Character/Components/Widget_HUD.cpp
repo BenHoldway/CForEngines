@@ -27,3 +27,8 @@ void UWidget_HUD::UpdateScore(int newScore)
 		);
 	}
 }
+
+void UWidget_HUD::UpdateStamina(float newStamina)
+{
+	if(StaminaBar) { StaminaBar->SetPercent(newStamina); }
+}

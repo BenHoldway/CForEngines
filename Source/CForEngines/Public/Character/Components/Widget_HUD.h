@@ -16,11 +16,14 @@ public:
 	virtual void NativeConstruct() override;
 	void UpdateHealth(float newHealthRatio);
 	void UpdateScore(int newScore);
+	void UpdateStamina(float newStamina);
 
 private:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UProgressBar> HealthBar;
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> ScoreText;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UProgressBar> StaminaBar;
 	
 };

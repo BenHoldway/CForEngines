@@ -5,8 +5,10 @@
 #include "GameFramework/Character.h"
 #include "P_FPS.generated.h"
 
+class UMovementComponent;
 class AWeapon_Base;
 class UHealthComponent;
+class UStaminaComponent;
 class UCharacterMovementComponent;
 class UCameraComponent;
 class UCapsuleComponent;
@@ -28,6 +30,8 @@ public:
 	virtual void Input_JumpReleased_Implementation() override;
 	virtual void Input_FirePressed_Implementation() override;
 	virtual void Input_FireReleased_Implementation() override;
+	virtual void Input_SprintPressed_Implementation() override;
+	virtual void Input_SprintReleased_Implementation() override;
 
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
 
@@ -44,6 +48,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UHealthComponent> _Health;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UStaminaComponent> _Stamina;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> _WeaponAttachPoint;
@@ -58,9 +64,22 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBehaviorTree> _BehaviorTree;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UCharacterMovementComponent> _MovementComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _SprintMoveSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _NormalMoveSpeed;
+
 private:
 	UFUNCTION()
 	void Handle_HealthDead(AController* causer);
 	UFUNCTION()
 	void Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth);
+
+	UFUNCTION()
+	void Handle_StoppedSprinting();
+	UFUNCTION()
+	void Handle_ChangeStamina(float currentStamina, float maxStamina, float changedStamina);
 };

@@ -1,8 +1,10 @@
 #include "Character/P_FPS.h"
 
-#include "IAutomationControllerManager.h"
 #include "Camera/CameraComponent.h"
 #include "Character/Components/HealthComponent.h"
+#include "Components/StaminaComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/MovementComponent.h"
 #include "Weapons/Weapon_Base.h"
 
 AP_FPS::AP_FPS()
@@ -10,6 +12,7 @@ AP_FPS::AP_FPS()
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	_Camera->SetupAttachment(RootComponent);
 	_Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+	_Stamina = CreateDefaultSubobject<UStaminaComponent>(TEXT("Stamina"));
 
 	_WeaponAttachPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Weapon Attack Point"));
 	_WeaponAttachPoint->SetupAttachment(_Camera);
@@ -21,6 +24,8 @@ void AP_FPS::BeginPlay()
 
 	_Health->OnDead.AddUniqueDynamic(this, &AP_FPS::Handle_HealthDead);
 	_Health->OnDamaged.AddUniqueDynamic(this, &AP_FPS::Handle_HealthDamaged);
+	_Stamina->OnStoppedSprinting.AddUniqueDynamic(this, &AP_FPS::Handle_StoppedSprinting);
+	_Stamina->OnStaminaChanged.AddUniqueDynamic(this, &AP_FPS::Handle_ChangeStamina);
 
 	if(_DefaultWeapon)
 	{
@@ -30,14 +35,29 @@ void AP_FPS::BeginPlay()
 		_WeaponRef = GetWorld()->SpawnActor<AWeapon_Base>(_DefaultWeapon, _WeaponAttachPoint->GetComponentTransform(), spawnParams);
 		_WeaponRef->AttachToComponent(_WeaponAttachPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
-}
 
+	
+	_MovementComponent = GetCharacterMovement();
+	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
+}
 
 
 void AP_FPS::Input_Move_Implementation(FVector2D value)
 {
 	AddMovementInput(FVector::VectorPlaneProject(_Camera->GetForwardVector(), FVector::UpVector).GetSafeNormal(), value.Y);
 	AddMovementInput(_Camera->GetRightVector(), value.X);
+}
+
+void AP_FPS::Input_SprintPressed_Implementation()
+{
+	_Stamina->StartSprinting();
+
+	_MovementComponent->MaxWalkSpeed = _SprintMoveSpeed;
+}
+
+void AP_FPS::Input_SprintReleased_Implementation()
+{
+	_Stamina->StopSprinting(0.1f);
 }
 
 void AP_FPS::Input_Look_Implementation(FVector2D value)
@@ -91,5 +111,15 @@ void AP_FPS::Handle_HealthDead(AController* causer)
 void AP_FPS::Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth)
 {
 	OnPawnDamaged.Broadcast(currentHealth, maxHealth, changedHealth);
+}
+
+void AP_FPS::Handle_StoppedSprinting()
+{
+	GetCharacterMovement()->MaxWalkSpeed = _NormalMoveSpeed;
+}
+
+void AP_FPS::Handle_ChangeStamina(float currentStamina, float maxStamina, float changedStamina)
+{
+	//TODO Add Delegate to tell PC stamina changed, so HUD can update
 }
 

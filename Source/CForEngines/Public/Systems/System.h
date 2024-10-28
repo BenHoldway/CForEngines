@@ -5,7 +5,7 @@
 #include "System.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature,
-	float, max, float, current)
+	float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDepletedSignature);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))

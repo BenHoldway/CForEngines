@@ -20,6 +20,9 @@ protected:
 	TObjectPtr<UInputAction> _MoveAction;
 
 	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> _SprintAction;
+
+	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> _LookAction;
 
 	UPROPERTY(EditAnywhere, Category="Input")
@@ -39,6 +42,8 @@ protected:
 	virtual void SetupInputComponent() override;
 
 	void Move(const FInputActionValue& value);
+	void SprintPressed();
+	void SprintReleased();
 	void Look(const FInputActionValue& value);
 	void JumpPressed();
 	void JumpReleased();
