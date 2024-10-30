@@ -49,6 +49,9 @@ void APC_FPS::SetupInputComponent()
 		
 		EIP->BindAction(_FireAction, ETriggerEvent::Triggered, this, &APC_FPS::FirePressed);
 		EIP->BindAction(_FireAction, ETriggerEvent::Completed, this, &APC_FPS::FireReleased);
+
+		EIP->BindAction(_CrouchAction, ETriggerEvent::Started, this, &APC_FPS::CrouchPressed);
+		EIP->BindAction(_CrouchAction, ETriggerEvent::Completed, this, &APC_FPS::CrouchReleased);
 	}
 }
 
@@ -60,6 +63,9 @@ void APC_FPS::Move(const FInputActionValue& value)
 	{
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
 		{
+			if(value.GetMagnitude() > 0.0f) { _IsMoving = true; }
+			else { _IsMoving = false; }
+			
 			IInputable::Execute_Input_Move(currentPawn, MoveVector);
 		}
 	}
@@ -67,6 +73,8 @@ void APC_FPS::Move(const FInputActionValue& value)
 
 void APC_FPS::SprintPressed()
 {
+	if(_IsCrouching || !_IsMoving) { return; }
+	
 	if(APawn* currentPawn = GetPawn())
 	{
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
@@ -78,6 +86,8 @@ void APC_FPS::SprintPressed()
 
 void APC_FPS::SprintReleased()
 {
+	if(_IsCrouching || !_IsMoving) { return; }
+	
 	if(APawn* currentPawn = GetPawn())
 	{
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
@@ -144,6 +154,30 @@ void APC_FPS::FireReleased()
 	}
 }
 
+void APC_FPS::CrouchPressed()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			_IsCrouching = true;
+			IInputable::Execute_Input_CrouchPressed(currentPawn);
+		}
+	}
+}
+
+void APC_FPS::CrouchReleased()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			_IsCrouching = false;
+			IInputable::Execute_Input_CrouchReleased(currentPawn);
+		}
+	}
+}
+
 void APC_FPS::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -170,5 +204,5 @@ void APC_FPS::Damaged(float currentHealth, float maxHealth, float changedHealth)
 
 void APC_FPS::StaminaChanged(float currentStamina, float maxStamina, float changedStamina)
 {
-	_HUDWidget->UpdateStamina(currentStamina / maxStamina);
+	_HUDWidget->StartStaminaChange(currentStamina / maxStamina);
 }

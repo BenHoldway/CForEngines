@@ -31,11 +31,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> _FireAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> _CrouchAction;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UWidget_HUD> _HUDWidgetClass;
 	TObjectPtr<UWidget_HUD> _HUDWidget;
 
 	int _Score;
+	bool _IsCrouching;
+	bool _IsMoving;
 
 	virtual void BeginPlay() override;
 	
@@ -49,6 +54,8 @@ protected:
 	void JumpReleased();
 	void FirePressed();
 	void FireReleased();
+	void CrouchPressed();
+	void CrouchReleased();
 
 	virtual void OnPossess(APawn* InPawn) override;
 
@@ -60,3 +67,4 @@ protected:
 	UFUNCTION()
 	void StaminaChanged(float currentStamina, float maxStamina, float changedStamina);
 };
+

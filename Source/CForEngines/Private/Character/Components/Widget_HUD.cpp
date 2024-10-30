@@ -7,12 +7,14 @@ void UWidget_HUD::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	_TimerManager = &GetWorld()->GetTimerManager();
+
 	if(HealthBar) { HealthBar->SetPercent(1.0f); }
 	if(ScoreText) { ScoreText->SetText(FText::FromString("Score: 0")); }
 	if(StaminaBar)
 	{
 		StaminaBar->SetPercent(1.0f);
-		HideStamina();
+		StaminaBar->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
@@ -33,25 +35,36 @@ void UWidget_HUD::UpdateScore(int newScore)
 	}
 }
 
-void UWidget_HUD::UpdateStamina(float newStamina)
+void UWidget_HUD::StartStaminaChange(float newStamina)
 {
 	if(StaminaBar)
 	{
-		if(!StaminaBar->IsVisible()) { StaminaBar->SetVisibility(ESlateVisibility::Visible); }
-		
-		StaminaBar->SetPercent(newStamina);
+		if(!StaminaBar->IsVisible() || StaminaBar->GetRenderOpacity() == 0.0f)
+		{
+			StaminaBar->SetRenderOpacity(1.0f);
+			StaminaBar->SetVisibility(ESlateVisibility::Visible);
+		}
+
+		_NewStamina = newStamina;
+
+		StaminaBar->SetPercent(_NewStamina);
 
 		if(StaminaBar->GetPercent() == 1.0f)
 		{
-			GetWorld()->GetTimerManager().SetTimer(_HideStaminaTimer, this, &UWidget_HUD::HideStamina, _HideStaminaTime);
+			_TimerManager->SetTimer(_HideStaminaTimer, this, &UWidget_HUD::FadeOutStamina, _HideStaminaTimeInterval, true, _HideStaminaTimeDelay);
 		}
 	}
 }
 
-void UWidget_HUD::HideStamina()
+void UWidget_HUD::FadeOutStamina()
 {
 	if(StaminaBar)
 	{
-		if(StaminaBar->IsVisible()) { StaminaBar->SetVisibility(ESlateVisibility::Hidden); }
+		StaminaBar->SetRenderOpacity(StaminaBar->GetRenderOpacity() - 0.1f);
+		if(StaminaBar->GetRenderOpacity() <= 0.0f)
+		{
+			StaminaBar->SetRenderOpacity(0.0f);
+			_TimerManager->ClearTimer(_HideStaminaTimer);
+		}
 	}
 }

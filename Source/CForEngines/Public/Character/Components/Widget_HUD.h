@@ -16,7 +16,7 @@ public:
 	virtual void NativeConstruct() override;
 	void UpdateHealth(float newHealthRatio);
 	void UpdateScore(int newScore);
-	void UpdateStamina(float newStamina);
+	void StartStaminaChange(float newStamina);
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -27,11 +27,19 @@ private:
 	TObjectPtr<UProgressBar> StaminaBar;
 
 	UFUNCTION()
-	void HideStamina();
+	void FadeOutStamina();
 
+	void ChangeStamina();
+
+	FTimerManager* _TimerManager;
 	FTimerHandle _HideStaminaTimer;
+	FTimerHandle _ChangeStaminaTimer;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	float _HideStaminaTime;
+	float _HideStaminaTimeInterval;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float _HideStaminaTimeDelay;
+
+	float _NewStamina;
 };

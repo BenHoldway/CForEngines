@@ -22,11 +22,11 @@ void UStaminaComponent::Sprint()
 {
 	//Clear regain timer
 	if(_TimerManager->TimerExists(_SprintRegainTimer)) { _TimerManager->ClearTimer(_SprintRegainTimer); }
-
+	
 	//Reduce stamina
-	_CurrentStamina -= 1.0f;
+	_CurrentStamina -= _StaminaChange;
 	_CurrentStamina = FMath::Clamp(_CurrentStamina, 0.0f, _MaxStamina);
-	OnStaminaChanged.Broadcast(_CurrentStamina, _MaxStamina, 1.0f);
+	OnStaminaValueChanged.Broadcast(_CurrentStamina, _MaxStamina, _StaminaChange);
 
 	if(_CurrentStamina <= 0.0f) { StopSprinting(1.0f); }
 }
@@ -35,15 +35,16 @@ void UStaminaComponent::StopSprinting(float delay)
 {
 	_TimerManager->ClearTimer(_SprintTimer);
 	_TimerManager->SetTimer(_SprintRegainTimer, this, &UStaminaComponent::RegainStamina, _StaminaRegainInterval, true, delay);
-
+	
 	OnStoppedSprinting.Broadcast();
 }
 
 void UStaminaComponent::RegainStamina()
 {
-	_CurrentStamina += 1.0f;
+	_CurrentStamina += _StaminaChange;
 	_CurrentStamina = FMath::Clamp(_CurrentStamina, 0.0f, _MaxStamina);
-	OnStaminaChanged.Broadcast(_CurrentStamina, _MaxStamina, 1.0f);
+
+	OnStaminaValueChanged.Broadcast(_CurrentStamina, _MaxStamina, _StaminaChange);
 	
 	if(_CurrentStamina == _MaxStamina)
 	{

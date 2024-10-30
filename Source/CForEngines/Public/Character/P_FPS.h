@@ -17,6 +17,7 @@ class UBehaviorTree;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnDamagedSignature, float, newHealth, float, maxHealth, float, changeInHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnStaminaChangedSignature, float, currentStamina, float, maxStamina, float, changedStamina);
 
+
 UCLASS()
 class CFORENGINES_API AP_FPS : public ACharacter, public IInputable
 {
@@ -33,6 +34,8 @@ public:
 	virtual void Input_FireReleased_Implementation() override;
 	virtual void Input_SprintPressed_Implementation() override;
 	virtual void Input_SprintReleased_Implementation() override;
+	virtual void Input_CrouchPressed_Implementation() override;
+	virtual void Input_CrouchReleased_Implementation() override;
 
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
 
@@ -41,6 +44,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FPawnDamagedSignature OnPawnDamaged;
 	FPawnStaminaChangedSignature OnPawnStaminaChanged;
+	
 
 protected:
 	void BeginPlay() override;
@@ -51,7 +55,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UHealthComponent> _Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<UStaminaComponent> _Stamina;
+	TObjectPtr<UStaminaComponent> _Stamina2;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> _WeaponAttachPoint;
