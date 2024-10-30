@@ -25,5 +25,13 @@ private:
 	TObjectPtr<UTextBlock> ScoreText;
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UProgressBar> StaminaBar;
-	
+
+	UFUNCTION()
+	void HideStamina();
+
+	FTimerHandle _HideStaminaTimer;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float _HideStaminaTime;
 };

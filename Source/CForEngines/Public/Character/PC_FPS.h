@@ -56,4 +56,7 @@ protected:
 
 	UFUNCTION()
 	void Damaged(float currentHealth, float maxHealth, float changedHealth);
+
+	UFUNCTION()
+	void StaminaChanged(float currentStamina, float maxStamina, float changedStamina);
 };

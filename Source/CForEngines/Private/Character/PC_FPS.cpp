@@ -24,6 +24,7 @@ void APC_FPS::BeginPlay()
 	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
 	{
 		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
+		currentPawn->OnPawnStaminaChanged.AddUniqueDynamic(this, &APC_FPS::StaminaChanged);
 	}
 }
 
@@ -165,4 +166,9 @@ void APC_FPS::AddPoints_Implementation(int points)
 void APC_FPS::Damaged(float currentHealth, float maxHealth, float changedHealth)
 {
 	_HUDWidget->UpdateHealth(currentHealth / maxHealth);
+}
+
+void APC_FPS::StaminaChanged(float currentStamina, float maxStamina, float changedStamina)
+{
+	_HUDWidget->UpdateStamina(currentStamina / maxStamina);
 }

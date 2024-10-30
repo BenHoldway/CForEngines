@@ -15,6 +15,7 @@ class UCapsuleComponent;
 class UBehaviorTree;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnDamagedSignature, float, newHealth, float, maxHealth, float, changeInHealth);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnStaminaChangedSignature, float, currentStamina, float, maxStamina, float, changedStamina);
 
 UCLASS()
 class CFORENGINES_API AP_FPS : public ACharacter, public IInputable
@@ -39,6 +40,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FPawnDamagedSignature OnPawnDamaged;
+	FPawnStaminaChangedSignature OnPawnStaminaChanged;
 
 protected:
 	void BeginPlay() override;

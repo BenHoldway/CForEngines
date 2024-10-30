@@ -4,7 +4,6 @@
 #include "Character/Components/HealthComponent.h"
 #include "Components/StaminaComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/MovementComponent.h"
 #include "Weapons/Weapon_Base.h"
 
 AP_FPS::AP_FPS()
@@ -120,6 +119,6 @@ void AP_FPS::Handle_StoppedSprinting()
 
 void AP_FPS::Handle_ChangeStamina(float currentStamina, float maxStamina, float changedStamina)
 {
-	//TODO Add Delegate to tell PC stamina changed, so HUD can update
+	OnPawnStaminaChanged.Broadcast(currentStamina, maxStamina, changedStamina);
 }
 
