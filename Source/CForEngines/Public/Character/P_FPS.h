@@ -46,9 +46,7 @@ public:
 	FPawnStaminaChangedSignature OnPawnStaminaChanged;
 	
 
-protected:
-	void BeginPlay() override;
-	
+protected:	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> _Camera;
 
@@ -77,6 +75,19 @@ protected:
 	float _SprintMoveSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _NormalMoveSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	FVector _CrouchEyeOffset;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float _CrouchSpeed;
+
+	FTimerHandle _CrouchTimer;
+
+	void BeginPlay() override;
+	/*void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+	virtual void CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult) override;
+	void LerpCrouchCamera();*/
 
 private:
 	UFUNCTION()

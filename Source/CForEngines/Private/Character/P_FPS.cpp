@@ -4,6 +4,7 @@
 #include "Character/Components/HealthComponent.h"
 #include "Character/Components/StaminaComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/InputSettings.h"
 #include "Weapons/Weapon_Base.h"
 
 AP_FPS::AP_FPS()
@@ -40,6 +41,42 @@ void AP_FPS::BeginPlay()
 	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
 }
 
+/*void AP_FPS::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+{
+	if(HalfHeightAdjust == 0.0f || !_Camera) { return; }
+
+	float startEyeHeight = BaseEyeHeight;
+	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+
+	_CrouchEyeOffset.Z += (startEyeHeight - BaseEyeHeight) + HalfHeightAdjust;
+	_Camera->SetRelativeLocation(FVector(0, 0, BaseEyeHeight));
+}
+
+void AP_FPS::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+{
+	if(HalfHeightAdjust == 0.0f || !_Camera) { return; }
+
+	float startEyeHeight = BaseEyeHeight;
+	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+
+	_CrouchEyeOffset.Z += (startEyeHeight - BaseEyeHeight) - HalfHeightAdjust;
+	_Camera->SetRelativeLocation(FVector(0, 0, BaseEyeHeight));
+	GetWorld()->GetTimerManager().SetTimer(_CrouchTimer, this, &AP_FPS::LerpCrouchCamera, 0.01f);
+}
+
+void AP_FPS::CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult)
+{
+	if(!_Camera) { return; }
+
+	_Camera->GetCameraView(DeltaTime, OutResult);
+	OutResult.Location += _CrouchEyeOffset;
+}
+
+void AP_FPS::LerpCrouchCamera()
+{
+	//_CrouchEyeOffset = (1.0f )
+}*/
+
 
 void AP_FPS::Input_Move_Implementation(FVector2D value)
 {
@@ -61,7 +98,6 @@ void AP_FPS::Input_SprintReleased_Implementation()
 
 void AP_FPS::Input_CrouchPressed_Implementation()
 {
-	UE_LOG(LogTemp, Display, TEXT("Crouched"));
 	ACharacter::Crouch();
 }
 
