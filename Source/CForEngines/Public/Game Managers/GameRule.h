@@ -4,7 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "GameRule.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameRuleCompleteSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGameRuleCompleteSignature, bool, successful);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGameRulePointsScoredSignature,
 	AController*, scorer, int, points);
 
@@ -23,6 +23,6 @@ public:
 	virtual void Init();
 
 protected:
-	void BroadcastComplete();
+	void BroadcastComplete(bool successful);
 	void BroadcastPointsScored(AController* scorer, int points);
 };

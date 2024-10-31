@@ -30,6 +30,6 @@ void UGameRule_Target::Handle_TargetDestroyed(UTarget* target, AController* caus
 	_AmountRemaining--;
 	BroadcastPointsScored(causer, targetValue);
 
-	if(_AmountRemaining == 0) { BroadcastComplete(); }
+	if(_AmountRemaining == 0) { BroadcastComplete(true); }
 }
 

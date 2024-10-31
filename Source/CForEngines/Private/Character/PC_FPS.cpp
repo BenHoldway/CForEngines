@@ -36,6 +36,7 @@ void APC_FPS::SetupInputComponent()
 	if(UEnhancedInputComponent* EIP = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
 		EIP->BindAction(_MoveAction, ETriggerEvent::Triggered, this, &APC_FPS::Move);
+		EIP->BindAction(_MoveAction, ETriggerEvent::Completed, this, &APC_FPS::Move);
 		
 		EIP->BindAction(_SprintAction, ETriggerEvent::Started, this, &APC_FPS::SprintPressed);
 		EIP->BindAction(_SprintAction, ETriggerEvent::Completed, this, &APC_FPS::SprintReleased);
@@ -59,12 +60,17 @@ void APC_FPS::Move(const FInputActionValue& value)
 {
 	FVector2D MoveVector = value.Get<FVector2D>();
 
+	if(value.GetMagnitude() > 0.0f) { _IsMoving = true; }
+	else
+	{
+		_IsMoving = false;
+		if(_IsSprinting) { SprintReleased(); }
+	}
+
 	if(APawn* currentPawn = GetPawn())
 	{
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
 		{
-			if(value.GetMagnitude() > 0.0f) { _IsMoving = true; }
-			else { _IsMoving = false; }
 			
 			IInputable::Execute_Input_Move(currentPawn, MoveVector);
 		}
@@ -74,6 +80,7 @@ void APC_FPS::Move(const FInputActionValue& value)
 void APC_FPS::SprintPressed()
 {
 	if(_IsCrouching || !_IsMoving) { return; }
+	if(!_IsSprinting) { _IsSprinting = true; }
 	
 	if(APawn* currentPawn = GetPawn())
 	{
@@ -86,7 +93,7 @@ void APC_FPS::SprintPressed()
 
 void APC_FPS::SprintReleased()
 {
-	if(_IsCrouching || !_IsMoving) { return; }
+	if(_IsSprinting) { _IsSprinting = false; }
 	
 	if(APawn* currentPawn = GetPawn())
 	{

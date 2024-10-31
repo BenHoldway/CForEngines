@@ -38,7 +38,7 @@ UPROPERTY(EditAnywhere, BlueprintReadWrite)
 
 private:
 	UFUNCTION()
-	void Handle_GameRuleCompleted();
+	void Handle_GameRuleCompleted(bool successful);
 	UFUNCTION()
 	void Handle_GameRulePointsScored(AController* scorer, int points);
 };

@@ -39,8 +39,10 @@ protected:
 	TObjectPtr<UWidget_HUD> _HUDWidget;
 
 	int _Score;
+	
 	bool _IsCrouching;
 	bool _IsMoving;
+	bool _IsSprinting;
 
 	virtual void BeginPlay() override;
 	

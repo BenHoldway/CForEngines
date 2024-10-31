@@ -9,9 +9,9 @@ void UGameRule::Init()
 {
 }
 
-void UGameRule::BroadcastComplete()
+void UGameRule::BroadcastComplete(bool successful)
 {
-	OnComplete.Broadcast();
+	OnComplete.Broadcast(successful);
 }
 
 void UGameRule::BroadcastPointsScored(AController* scorer, int points)

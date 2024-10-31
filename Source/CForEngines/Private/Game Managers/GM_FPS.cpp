@@ -102,7 +102,8 @@ void AGM_FPS::Handle_GameRulePointsScored(AController* scorer, int points)
 	}
 }
 
-void AGM_FPS::Handle_GameRuleCompleted()
+void AGM_FPS::Handle_GameRuleCompleted(bool successful)
 {
-	
+	if(successful) { UE_LOG(LogTemp, Display, TEXT("Success")); }
+	else { UE_LOG(LogTemp, Display, TEXT("Failure")); }
 }
