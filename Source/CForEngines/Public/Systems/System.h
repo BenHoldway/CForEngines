@@ -8,6 +8,17 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature,
 	float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDepletedSignature);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStartedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStoppedSignature);
+
+UENUM()
+enum ESystemType
+{
+	Power = 0 UMETA(DisplayName = "Power"),
+	Oxygen = 1 UMETA(DisplayName = "Oxygen")
+};
+
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CFORENGINES_API USystem : public UActorComponent
 {
@@ -15,17 +26,30 @@ class CFORENGINES_API USystem : public UActorComponent
 
 public:
 	USystem();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TEnumAsByte<ESystemType> _SystemType;
 
 	UPROPERTY(BlueprintAssignable)
 	FDepletedSignature OnDepleted;
 	UPROPERTY(BlueprintAssignable)
 	FValueChangedSignature OnValueChanged;
 
+	UPROPERTY(BlueprintAssignable)
+	FFaultStartedSignature OnFaultStarted;
+	UPROPERTY(BlueprintAssignable)
+	FFaultStoppedSignature OnFaultStopped;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _MaxValue;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float _CurrentValue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _MinFaultTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _MaxFaultTime;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _ValueChangeAmount;
@@ -33,15 +57,17 @@ protected:
 	float _ValueChangeTime;
 
 	FTimerManager* _TimerManager;
+	FTimerHandle _StartFaultTimer;
 	FTimerHandle _ValueChangeTimer;
 	
 	virtual void BeginPlay() override;
 
 public:
-	UFUNCTION()
-	void SetTimer();
-	UFUNCTION()
+	void SetFaultTimer();
+	
+	void Handle_FaultStarted();
+	void Handle_FaultStopped();
+	
 	void Handle_ValueChanged();
-	UFUNCTION()
 	void Handle_Regenerated();
 };

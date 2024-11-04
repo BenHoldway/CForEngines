@@ -36,6 +36,7 @@ public:
 	virtual void Input_SprintReleased_Implementation() override;
 	virtual void Input_CrouchPressed_Implementation() override;
 	virtual void Input_CrouchReleased_Implementation() override;
+	virtual void Input_Interact_Implementation() override;
 
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
 

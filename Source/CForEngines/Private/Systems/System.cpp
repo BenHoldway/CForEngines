@@ -15,13 +15,32 @@ void USystem::BeginPlay()
 {
 	Super::BeginPlay();
 	_TimerManager = &GetWorld()->GetTimerManager();
+	_CurrentValue = _MaxValue;
 
-	SetTimer();
+	
+	SetFaultTimer();
 }
 
-void USystem::SetTimer()
+void USystem::SetFaultTimer()
 {
-	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_ValueChanged, _ValueChangeTime, true);
+	_TimerManager->SetTimer(_StartFaultTimer, this, &USystem::Handle_FaultStarted,
+		FMath::RandRange(_MinFaultTime, _MaxFaultTime), false);
+}
+
+void USystem::Handle_FaultStarted()
+{
+	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
+	
+	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_ValueChanged,
+	_ValueChangeTime, true);
+}
+
+void USystem::Handle_FaultStopped()
+{
+	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
+
+	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_Regenerated,
+_ValueChangeTime, true);
 }
 
 void USystem::Handle_ValueChanged()
@@ -40,7 +59,13 @@ void USystem::Handle_ValueChanged()
 
 void USystem::Handle_Regenerated()
 {
-	_CurrentValue = _MaxValue;
+	_CurrentValue += _ValueChangeAmount;
 
-	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { SetTimer(); }
+	if(_CurrentValue >= _MaxValue)
+	{
+		_CurrentValue = _MaxValue;
+		_TimerManager->ClearTimer(_ValueChangeTimer);
+	}
+
+	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { SetFaultTimer(); }
 }

@@ -41,4 +41,6 @@ private:
 	void Handle_GameRuleCompleted(bool successful);
 	UFUNCTION()
 	void Handle_GameRulePointsScored(AController* scorer, int points);
+	UFUNCTION()
+	void Handle_GameRuleSystemDepleted(USystem* system);
 };

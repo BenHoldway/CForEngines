@@ -46,6 +46,9 @@ public:
 	void Input_CrouchReleased();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Input_Interact();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	UInputMappingContext* GetMappingContext();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

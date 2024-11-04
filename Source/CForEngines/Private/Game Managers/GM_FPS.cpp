@@ -2,9 +2,11 @@
 
 #include "Character/Components/Controllable.h"
 #include "Game Managers/GameRule.h"
+#include "Game Managers/GameRule_Systems.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
- 
+#include "Systems/System.h"
+
 AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Player, const FString& IncomingName)
 {
 	if(_PlayerStarts.Num() == 0)
@@ -48,6 +50,11 @@ void AGM_FPS::HandleMatchIsWaitingToStart()
 			rule->OnComplete.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleCompleted);
 			rule->OnPointsScored.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRulePointsScored);
 			_GameRulesLeft++;
+
+			if(UGameRule_Systems* systemRule = Cast<UGameRule_Systems>(rule))
+			{
+				systemRule->OnSystemDepleted.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleSystemDepleted);
+			}
 		}
 	}
 	
@@ -106,4 +113,17 @@ void AGM_FPS::Handle_GameRuleCompleted(bool successful)
 {
 	if(successful) { UE_LOG(LogTemp, Display, TEXT("Success")); }
 	else { UE_LOG(LogTemp, Display, TEXT("Failure")); }
+}
+
+void AGM_FPS::Handle_GameRuleSystemDepleted(USystem* system)
+{
+	switch (system->_SystemType)
+	{
+		case ESystemType::Power:
+			UE_LOG(LogTemp, Display, TEXT("Power Depleted"))
+		case ESystemType::Oxygen:
+			UE_LOG(LogTemp, Display, TEXT("Oxygen Depleted"))
+		default:
+			break;
+	}
 }

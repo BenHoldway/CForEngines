@@ -106,6 +106,11 @@ void AP_FPS::Input_CrouchReleased_Implementation()
 	ACharacter::UnCrouch();
 }
 
+void AP_FPS::Input_Interact_Implementation()
+{
+	IInputable::Input_Interact_Implementation();
+}
+
 void AP_FPS::Input_Look_Implementation(FVector2D value)
 {
 	AddActorWorldRotation(FRotator(0.0f, value.X, 0.0f));

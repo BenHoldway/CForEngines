@@ -1,23 +1,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Character/Components/Interactable.h"
 #include "GameFramework/Actor.h"
 #include "System_Controller.generated.h"
 
-class USphereComponent;
+class UBoxComponent;
 class USystem;
+class ASystem_Controller;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSystemRegisteredSignature, ASystem_Controller*, system);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSystemDepletedSignature, ASystem_Controller*, systemController,
+	USystem*, system);
 
 UCLASS(Abstract)
-class CFORENGINES_API ASystem_Controller : public AActor
+class CFORENGINES_API ASystem_Controller : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 
 public:
 	ASystem_Controller();
 
+	UPROPERTY(BlueprintAssignable)
+	FSystemDepletedSignature OnDepleted;
+	
+	static inline FSystemRegisteredSignature OnSystemRegister;
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<USphereComponent> _Collider;
+	TObjectPtr<UBoxComponent> _Collider2;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UStaticMeshComponent> _Mesh;
@@ -26,6 +37,8 @@ protected:
 	TObjectPtr<USystem> _System;
 	
 	virtual void BeginPlay() override;
+
+	virtual void Interact_Implementation() override;
 
 public:
 	UFUNCTION()
