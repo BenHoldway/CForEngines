@@ -2,9 +2,10 @@
 
 #include "Camera/CameraComponent.h"
 #include "Character/Components/HealthComponent.h"
+#include "Character/Components/Interactable.h"
 #include "Character/Components/StaminaComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/InputSettings.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Weapons/Weapon_Base.h"
 
 AP_FPS::AP_FPS()
@@ -108,7 +109,23 @@ void AP_FPS::Input_CrouchReleased_Implementation()
 
 void AP_FPS::Input_Interact_Implementation()
 {
-	IInputable::Input_Interact_Implementation();
+	UWorld* const world = GetWorld();
+	if(world == nullptr) { return; }
+	
+	TArray<FHitResult> hit;
+	FVector start = GetActorLocation();
+	TArray<AActor*> ActorsToIgnore;
+	
+	if(UKismetSystemLibrary::SphereTraceMulti(world, start, start, 250.0f, UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2), false, ActorsToIgnore,
+		EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f))
+	{
+		AActor* closestHit = GetClosest(hit);
+
+		if(UKismetSystemLibrary::DoesImplementInterface(closestHit, UInteractable::StaticClass()))
+		{
+			IInteractable::Execute_Interact(closestHit);
+		}
+	}
 }
 
 void AP_FPS::Input_Look_Implementation(FVector2D value)
@@ -151,6 +168,19 @@ UInputMappingContext* AP_FPS::GetMappingContext_Implementation()
 UBehaviorTree* AP_FPS::GetBehaviorTree_Implementation()
 {
 	return _BehaviorTree;
+}
+
+AActor* AP_FPS::GetClosest(TArray<FHitResult> hit)
+{
+	float distance = 100000000;
+	FHitResult closest(ForceInit);
+	
+	for(int hitActor = 0; hitActor < hit.Num(); hitActor++)
+	{
+		if(GetDistanceTo(hit[hitActor].GetActor()) < distance) { closest = hit[hitActor]; }
+	}
+
+	return closest.GetActor();
 }
 
 

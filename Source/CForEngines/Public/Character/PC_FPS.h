@@ -61,6 +61,7 @@ protected:
 	void FireReleased();
 	void CrouchPressed();
 	void CrouchReleased();
+	void Interact();
 
 	virtual void OnPossess(APawn* InPawn) override;
 

@@ -12,30 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Inputs/IA_Interact.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/System_Controller.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/3U/0QJA7XFZZ1VLXRSJCC0BN2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/WA/4E4K34Q5GVG6R6ZZU1KBHR.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/Interactable.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Interactable.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_GM_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_GM_FPS.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IMC_PlayerControls.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/IMC_PlayerControls.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_PController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_PController.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/System_Controller.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/System_Controller.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/3U/0QJA7XFZZ1VLXRSJCC0BN2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/3U/0QJA7XFZZ1VLXRSJCC0BN2.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/WA/4E4K34Q5GVG6R6ZZU1KBHR.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/WA/4E4K34Q5GVG6R6ZZU1KBHR.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Inputable.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Inputable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Weapons/Weapon_HitScan.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Weapons/Weapon_HitScan.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +37,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/StaminaComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/Widget_HUD.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -76,7 +66,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;C++ Project.CForEngines.executor&quot;: &quot;Run&quot;,
+    &quot;C++ Project.CForEngines.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -554,6 +544,7 @@
       <workItem from="1730293757927" duration="1609000" />
       <workItem from="1730365198108" duration="9213000" />
       <workItem from="1730711467181" duration="9569000" />
+      <workItem from="1730808613762" duration="5583000" />
     </task>
     <servers />
   </component>

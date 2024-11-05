@@ -100,4 +100,6 @@ private:
 	void Handle_StoppedSprinting();
 	UFUNCTION()
 	void Handle_ChangeStamina(float currentStamina, float maxStamina, float changedStamina);
+
+	AActor* GetClosest(TArray<FHitResult> hit);
 };

@@ -45,6 +45,8 @@ void APC_FPS::SetupInputComponent()
 		
 		EIP->BindAction(_LookAction, ETriggerEvent::Triggered, this, &APC_FPS::Look);
 		
+		EIP->BindAction(_InteractAction, ETriggerEvent::Started, this, &APC_FPS::Interact);
+		
 		EIP->BindAction(_JumpAction, ETriggerEvent::Triggered, this, &APC_FPS::JumpPressed);
 		EIP->BindAction(_JumpAction, ETriggerEvent::Completed, this, &APC_FPS::JumpReleased);
 		
@@ -71,7 +73,6 @@ void APC_FPS::Move(const FInputActionValue& value)
 	{
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
 		{
-			
 			IInputable::Execute_Input_Move(currentPawn, MoveVector);
 		}
 	}
@@ -181,6 +182,18 @@ void APC_FPS::CrouchReleased()
 		{
 			_IsCrouching = false;
 			IInputable::Execute_Input_CrouchReleased(currentPawn);
+		}
+	}
+}
+
+void APC_FPS::Interact()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			_IsCrouching = false;
+			IInputable::Execute_Input_Interact(currentPawn);
 		}
 	}
 }

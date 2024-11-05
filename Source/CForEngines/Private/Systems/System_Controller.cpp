@@ -27,6 +27,7 @@ void ASystem_Controller::BeginPlay()
 
 void ASystem_Controller::Interact_Implementation()
 {
+	UE_LOG(LogTemp, Display, TEXT("Interacted"));
 	_System->Handle_FaultStopped();
 }
 

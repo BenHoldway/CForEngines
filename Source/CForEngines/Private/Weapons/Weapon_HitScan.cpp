@@ -20,8 +20,6 @@ void AWeapon_HitScan::Fire()
 		EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f))
 	{
 		UGameplayStatics::ApplyDamage(hit.GetActor(), _Damage, GetOwner()->GetInstigatorController(), GetOwner(), UDamageType::StaticClass());
-
-		UE_LOG(LogTemp, Display, TEXT("Hit Position %s"), *hit.ImpactPoint.ToString());
 	}
 	
 	Super::Fire();
