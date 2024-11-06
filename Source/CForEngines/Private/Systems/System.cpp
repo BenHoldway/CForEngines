@@ -1,5 +1,7 @@
 #include "Systems/System.h"
 
+#include "Systems/System_Controller.h"
+
 USystem::USystem()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -11,11 +13,17 @@ USystem::USystem()
 	_TimerManager = nullptr;
 }
 
+void USystem::Init(ASystem_Controller* owner)
+{
+	_Controller = owner;
+}
+
 void USystem::BeginPlay()
 {
 	Super::BeginPlay();
 	_TimerManager = &GetWorld()->GetTimerManager();
 	_CurrentValue = _MaxValue;
+	_FaultHasStarted = false;
 
 	
 	SetFaultTimer();
@@ -29,6 +37,9 @@ void USystem::SetFaultTimer()
 
 void USystem::Handle_FaultStarted()
 {
+	UE_LOG(LogTemp, Display, TEXT("Fault started from %s"), *GetOwner()->GetName());
+	_FaultHasStarted = true;
+	
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
 	
 	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_ValueChanged,
@@ -37,6 +48,9 @@ void USystem::Handle_FaultStarted()
 
 void USystem::Handle_FaultStopped()
 {
+	UE_LOG(LogTemp, Display, TEXT("Fault stopped at %s"), *GetOwner()->GetName());
+	_FaultHasStarted = false;
+	
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
 
 	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_Regenerated,
@@ -68,4 +82,9 @@ void USystem::Handle_Regenerated()
 	}
 
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { SetFaultTimer(); }
+}
+
+bool USystem::HasFaultStarted()
+{
+	return _FaultHasStarted;
 }

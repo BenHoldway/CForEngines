@@ -4,14 +4,23 @@
 #include "Character/Components/HealthComponent.h"
 #include "Character/Components/Interactable.h"
 #include "Character/Components/StaminaComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Weapons/Weapon_Base.h"
+
 
 AP_FPS::AP_FPS()
 {
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	_Camera->SetupAttachment(RootComponent);
+	
+	_InteractionCollider2 = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Collider"));
+	_InteractionCollider2->SetupAttachment(_Camera);
+	_InteractionCollider2->OnComponentBeginOverlap.AddUniqueDynamic(this, &AP_FPS::Handle_InteractionBeginOverlap);
+	_InteractionCollider2->OnComponentEndOverlap.AddUniqueDynamic(this, &AP_FPS::Handle_InteractionEndOverlap);
+	
 	_Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 	_Stamina2 = CreateDefaultSubobject<UStaminaComponent>(TEXT("Stamina"));
 
@@ -37,6 +46,10 @@ void AP_FPS::BeginPlay()
 		_WeaponRef->AttachToComponent(_WeaponAttachPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 
+	_InteractionCollider2->SetCapsuleHalfHeight(_InteractionRange);
+	_InteractionCollider2->SetRelativeLocation(FVector(_InteractionRange, 0, 0));
+	//_InteractionCollider2->SetRelativeRotation(FRotator(0, 90, 0));
+	
 	
 	_MovementComponent = GetCharacterMovement();
 	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
@@ -109,22 +122,11 @@ void AP_FPS::Input_CrouchReleased_Implementation()
 
 void AP_FPS::Input_Interact_Implementation()
 {
-	UWorld* const world = GetWorld();
-	if(world == nullptr) { return; }
-	
-	TArray<FHitResult> hit;
-	FVector start = GetActorLocation();
-	TArray<AActor*> ActorsToIgnore;
-	
-	if(UKismetSystemLibrary::SphereTraceMulti(world, start, start, 250.0f, UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2), false, ActorsToIgnore,
-		EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f))
-	{
-		AActor* closestHit = GetClosest(hit);
+	if(_Interactable == nullptr) { return; }
 
-		if(UKismetSystemLibrary::DoesImplementInterface(closestHit, UInteractable::StaticClass()))
-		{
-			IInteractable::Execute_Interact(closestHit);
-		}
+	if(UKismetSystemLibrary::DoesImplementInterface(_Interactable, UInteractable::StaticClass()))
+	{
+		IInteractable::Execute_Interact(_Interactable);
 	}
 }
 
@@ -194,6 +196,7 @@ void AP_FPS::Handle_HealthDamaged(float currentHealth, float maxHealth, float ch
 	OnPawnDamaged.Broadcast(currentHealth, maxHealth, changedHealth);
 }
 
+
 void AP_FPS::Handle_StoppedSprinting()
 {
 	GetCharacterMovement()->MaxWalkSpeed = _NormalMoveSpeed;
@@ -204,3 +207,37 @@ void AP_FPS::Handle_ChangeStamina(float currentStamina, float maxStamina, float 
 	OnPawnStaminaChanged.Broadcast(currentStamina, maxStamina, changedStamina);
 }
 
+void AP_FPS::Handle_InteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		UWorld* const world = GetWorld();
+		if(world == nullptr) { return; }
+
+		//Raycast when shooting
+		FHitResult hit(ForceInit);
+		FVector start = _Camera->GetComponentLocation();
+		FVector end = start + (_Camera->GetForwardVector() * _InteractionRange * 2);
+		TArray<AActor*> ActorsToIgnore;
+		
+		if(UKismetSystemLibrary::LineTraceSingle(world, start, end, UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2), false, ActorsToIgnore,
+		EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f))
+		{
+			_Interactable = OtherActor;
+            OnShowInteractPrompt.Broadcast();	
+		}
+	}
+}
+
+void AP_FPS::Handle_InteractionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && (_Interactable == OtherActor))
+	{
+		if(_Interactable != nullptr)
+		{
+			_Interactable = nullptr;
+			OnHideInteractPrompt.Broadcast();
+		}
+	}
+}

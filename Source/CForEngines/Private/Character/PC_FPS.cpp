@@ -25,6 +25,9 @@ void APC_FPS::BeginPlay()
 	{
 		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
 		currentPawn->OnPawnStaminaChanged.AddUniqueDynamic(this, &APC_FPS::StaminaChanged);
+
+		currentPawn->OnShowInteractPrompt.AddUniqueDynamic(this, &APC_FPS::ShowInteractPrompt);
+		currentPawn->OnHideInteractPrompt.AddUniqueDynamic(this, &APC_FPS::HideInteractPrompt);
 	}
 }
 
@@ -225,4 +228,14 @@ void APC_FPS::Damaged(float currentHealth, float maxHealth, float changedHealth)
 void APC_FPS::StaminaChanged(float currentStamina, float maxStamina, float changedStamina)
 {
 	_HUDWidget->StartStaminaChange(currentStamina / maxStamina);
+}
+
+void APC_FPS::ShowInteractPrompt()
+{
+	_HUDWidget->ShowInteractPrompt();
+}
+
+void APC_FPS::HideInteractPrompt()
+{
+	_HUDWidget->HideInteractPrompt();
 }

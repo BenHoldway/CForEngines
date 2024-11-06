@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "P_FPS.generated.h"
 
+class USphereComponent;
 class UMovementComponent;
 class AWeapon_Base;
 class UHealthComponent;
@@ -16,6 +17,8 @@ class UBehaviorTree;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnDamagedSignature, float, newHealth, float, maxHealth, float, changeInHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnStaminaChangedSignature, float, currentStamina, float, maxStamina, float, changedStamina);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FShowInteractPromptSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHideInteractPromptSignature);
 
 
 UCLASS()
@@ -45,11 +48,16 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FPawnDamagedSignature OnPawnDamaged;
 	FPawnStaminaChangedSignature OnPawnStaminaChanged;
+	FShowInteractPromptSignature OnShowInteractPrompt;
+	FHideInteractPromptSignature OnHideInteractPrompt;
 	
 
 protected:	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> _Camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UCapsuleComponent> _InteractionCollider2;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UHealthComponent> _Health;
@@ -73,6 +81,9 @@ protected:
 	TObjectPtr<UCharacterMovementComponent> _MovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _InteractionRange;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _SprintMoveSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _NormalMoveSpeed;
@@ -82,6 +93,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float _CrouchSpeed;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	AActor* _Interactable;
+	
 	FTimerHandle _CrouchTimer;
 
 	void BeginPlay() override;
@@ -96,6 +110,11 @@ private:
 	UFUNCTION()
 	void Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth);
 
+	UFUNCTION()
+	void Handle_InteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void Handle_InteractionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
 	UFUNCTION()
 	void Handle_StoppedSprinting();
 	UFUNCTION()

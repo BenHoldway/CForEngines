@@ -19,6 +19,8 @@ ASystem_Controller::ASystem_Controller()
 void ASystem_Controller::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_System->Init(this);
 	_System->OnValueChanged.AddUniqueDynamic(this, &ASystem_Controller::Handle_SystemValueChanged);
 	_System->OnDepleted.AddUniqueDynamic(this, &ASystem_Controller::Handle_SystemDepleted);
 
@@ -27,8 +29,7 @@ void ASystem_Controller::BeginPlay()
 
 void ASystem_Controller::Interact_Implementation()
 {
-	UE_LOG(LogTemp, Display, TEXT("Interacted"));
-	_System->Handle_FaultStopped();
+	if(_System->HasFaultStarted()) { _System->Handle_FaultStopped(); }
 }
 
 void ASystem_Controller::Handle_SystemValueChanged(float max, float current)

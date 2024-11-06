@@ -1,5 +1,6 @@
 #include "Character/Components/Widget_HUD.h"
 
+#include "Components/Border.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 
@@ -16,6 +17,8 @@ void UWidget_HUD::NativeConstruct()
 		StaminaBar->SetPercent(1.0f);
 		StaminaBar->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	if(InteractPrompt) { InteractPrompt->SetVisibility(ESlateVisibility::Hidden); }
 }
 
 void UWidget_HUD::UpdateHealth(float newHealthRatio)
@@ -54,6 +57,16 @@ void UWidget_HUD::StartStaminaChange(float newStamina)
 			_TimerManager->SetTimer(_HideStaminaTimer, this, &UWidget_HUD::FadeOutStamina, _HideStaminaTimeInterval, true, _HideStaminaTimeDelay);
 		}
 	}
+}
+
+void UWidget_HUD::ShowInteractPrompt()
+{
+	InteractPrompt->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UWidget_HUD::HideInteractPrompt()
+{
+	InteractPrompt->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UWidget_HUD::FadeOutStamina()

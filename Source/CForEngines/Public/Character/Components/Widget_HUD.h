@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Widget_HUD.generated.h"
 
+class UBorder;
 class UTextBlock;
 class UProgressBar;
 
@@ -17,6 +18,8 @@ public:
 	void UpdateHealth(float newHealthRatio);
 	void UpdateScore(int newScore);
 	void StartStaminaChange(float newStamina);
+	void ShowInteractPrompt();
+	void HideInteractPrompt();
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -25,11 +28,13 @@ private:
 	TObjectPtr<UTextBlock> ScoreText;
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UProgressBar> StaminaBar;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UBorder> InteractPrompt;
+
+	
 
 	UFUNCTION()
 	void FadeOutStamina();
-
-	void ChangeStamina();
 
 	FTimerManager* _TimerManager;
 	FTimerHandle _HideStaminaTimer;

@@ -72,5 +72,10 @@ protected:
 
 	UFUNCTION()
 	void StaminaChanged(float currentStamina, float maxStamina, float changedStamina);
+
+	UFUNCTION()
+	void ShowInteractPrompt();
+	UFUNCTION()
+	void HideInteractPrompt();
 };
 

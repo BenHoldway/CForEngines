@@ -4,8 +4,9 @@
 #include "Components/ActorComponent.h"
 #include "System.generated.h"
 
+class ASystem_Controller;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature,
-	float, max, float, current);
+                                             float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDepletedSignature);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStartedSignature);
@@ -26,6 +27,8 @@ class CFORENGINES_API USystem : public UActorComponent
 
 public:
 	USystem();
+
+	void Init(ASystem_Controller* owner);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<ESystemType> _SystemType;
@@ -41,6 +44,9 @@ public:
 	FFaultStoppedSignature OnFaultStopped;
 
 protected:
+	UPROPERTY()
+	ASystem_Controller* _Controller;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _MaxValue;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -56,6 +62,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float _ValueChangeTime;
 
+	bool _FaultHasStarted;
+
 	FTimerManager* _TimerManager;
 	FTimerHandle _StartFaultTimer;
 	FTimerHandle _ValueChangeTimer;
@@ -70,4 +78,6 @@ public:
 	
 	void Handle_ValueChanged();
 	void Handle_Regenerated();
+
+	bool HasFaultStarted();
 };
