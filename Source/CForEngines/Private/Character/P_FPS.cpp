@@ -8,6 +8,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Systems/System_Controller.h"
 #include "Weapons/Weapon_Base.h"
 
 
@@ -220,12 +221,17 @@ void AP_FPS::Handle_InteractionBeginOverlap(UPrimitiveComponent* OverlappedCompo
 		FVector start = _Camera->GetComponentLocation();
 		FVector end = start + (_Camera->GetForwardVector() * _InteractionRange * 2);
 		TArray<AActor*> ActorsToIgnore;
+		ActorsToIgnore.Add(this);
+
+		UKismetSystemLibrary::SphereTraceSingle(world, start, end, _InteractionCollider2->GetScaledCapsuleRadius(), UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2),
+			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f);
 		
-		if(UKismetSystemLibrary::LineTraceSingle(world, start, end, UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2), false, ActorsToIgnore,
-		EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f))
+		if(hit.GetActor() == OtherActor)
 		{
 			_Interactable = OtherActor;
-            OnShowInteractPrompt.Broadcast();	
+
+			UE_LOG(LogTemp, Display, TEXT("Can Interact with %s"), *hit.GetActor()->GetName());
+			OnShowInteractPrompt.Broadcast();
 		}
 	}
 }
