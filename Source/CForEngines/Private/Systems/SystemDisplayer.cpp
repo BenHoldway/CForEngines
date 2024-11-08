@@ -16,7 +16,7 @@ ASystemDisplayer::ASystemDisplayer()
 	_Mesh -> SetupAttachment(RootComponent);
 
 	_SystemWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("System Widget"));
-	_SystemWidgetComponent->AttachToComponent(_Collider, FAttachmentTransformRules::KeepRelativeTransform);
+	_SystemWidgetComponent->SetupAttachment(_Collider);
 }
 
 void ASystemDisplayer::BeginPlay()
