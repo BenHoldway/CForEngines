@@ -8,6 +8,9 @@ class USystemWidget;
 class UWidgetComponent;
 class UBoxComponent;
 class UStaticMeshComponent;
+class ASystemDisplayer;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSystemDisplayRegisteredSignature, ASystemDisplayer*, systemDisplay);
 
 UCLASS(Abstract)
 class CFORENGINES_API ASystemDisplayer : public AActor
@@ -16,6 +19,11 @@ class CFORENGINES_API ASystemDisplayer : public AActor
 
 public:
 	ASystemDisplayer();
+
+	static inline FSystemDisplayRegisteredSignature OnRegister;
+
+	void UpdatePower(float max, float current);
+	void UpdateOxygen(float max, float current);
 
 protected:
 	virtual void BeginPlay() override;

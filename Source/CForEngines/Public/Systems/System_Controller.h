@@ -5,13 +5,15 @@
 #include "GameFramework/Actor.h"
 #include "System_Controller.generated.h"
 
+enum ESystemType : int;
 class UBoxComponent;
 class USystem;
 class ASystem_Controller;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSystemRegisteredSignature, ASystem_Controller*, system);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSystemValueChangedSignature, ESystemType, systemType, float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSystemDepletedSignature, ASystem_Controller*, systemController,
-	USystem*, system);
+	ESystemType, systemType);
 
 UCLASS(Abstract)
 class CFORENGINES_API ASystem_Controller : public AActor, public IInteractable
@@ -23,6 +25,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FSystemDepletedSignature OnDepleted;
+	FSystemValueChangedSignature OnSystemValueChanged;
 	
 	static inline FSystemRegisteredSignature OnSystemRegister;
 

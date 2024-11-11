@@ -5,8 +5,7 @@
 #include "System.generated.h"
 
 class ASystem_Controller;
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature,
-                                             float, max, float, current);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature, float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDepletedSignature);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStartedSignature);
@@ -29,6 +28,7 @@ public:
 	USystem();
 
 	void Init(ASystem_Controller* owner);
+	ESystemType GetSystemType();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<ESystemType> _SystemType;

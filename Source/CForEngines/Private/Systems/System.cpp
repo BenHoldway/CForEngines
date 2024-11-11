@@ -49,6 +49,7 @@ void USystem::Handle_FaultStarted()
 void USystem::Handle_FaultStopped()
 {
 	UE_LOG(LogTemp, Display, TEXT("Fault stopped at %s"), *GetOwner()->GetName());
+	UE_LOG(LogTemp, Display, TEXT("Fault stopped at %hhd"), _FaultHasStarted);
 	_FaultHasStarted = false;
 	
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
@@ -81,10 +82,17 @@ void USystem::Handle_Regenerated()
 		_TimerManager->ClearTimer(_ValueChangeTimer);
 	}
 
+	OnValueChanged.Broadcast(_MaxValue, _CurrentValue);
+
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { SetFaultTimer(); }
 }
 
 bool USystem::HasFaultStarted()
 {
 	return _FaultHasStarted;
+}
+
+ESystemType USystem::GetSystemType()
+{
+	return _SystemType;
 }

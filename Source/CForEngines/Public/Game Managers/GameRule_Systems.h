@@ -4,11 +4,13 @@
 #include "GameRule.h"
 #include "GameRule_Systems.generated.h"
 
+class ASystemDisplayer;
+enum ESystemType : int;
 class ASystem_Controller;
 class USystem;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameRuleSystemRequestTargetsSignature);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGameRuleSystemDepletedSignature, USystem*, system);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGameRuleSystemDepletedSignature, ESystemType, systemType);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CFORENGINES_API UGameRule_Systems : public UGameRule
@@ -31,10 +33,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<TObjectPtr<ASystem_Controller>> _Systems;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<ASystemDisplayer> _SystemDisplay;
+
 	UFUNCTION()
 	void Handle_SystemRegistered(ASystem_Controller* systemController);
 	UFUNCTION()
-	void Handle_SystemDepleted(ASystem_Controller* systemController, USystem* system);
+	void Handle_SystemDisplayRegistered(ASystemDisplayer* systemDisplayer);
+	UFUNCTION()
+	void Handle_SystemValueChanged(ESystemType systemType, float max, float current);
+	UFUNCTION()
+	void Handle_SystemDepleted(ASystem_Controller* systemController, ESystemType systemType);
 
 public:
 };

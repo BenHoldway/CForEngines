@@ -42,5 +42,5 @@ private:
 	UFUNCTION()
 	void Handle_GameRulePointsScored(AController* scorer, int points);
 	UFUNCTION()
-	void Handle_GameRuleSystemDepleted(USystem* system);
+	void Handle_GameRuleSystemDepleted(ESystemType systemType);
 };

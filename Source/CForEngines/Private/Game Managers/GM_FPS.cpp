@@ -115,9 +115,9 @@ void AGM_FPS::Handle_GameRuleCompleted(bool successful)
 	else { UE_LOG(LogTemp, Display, TEXT("Failure")); }
 }
 
-void AGM_FPS::Handle_GameRuleSystemDepleted(USystem* system)
+void AGM_FPS::Handle_GameRuleSystemDepleted(ESystemType systemType)
 {
-	switch (system->_SystemType)
+	switch (systemType)
 	{
 		case ESystemType::Power:
 			UE_LOG(LogTemp, Display, TEXT("Power Depleted"))

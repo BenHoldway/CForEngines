@@ -34,7 +34,7 @@ void ASystem_Controller::Interact_Implementation()
 
 void ASystem_Controller::Handle_SystemValueChanged(float max, float current)
 {
-	//TODO Update in Widget
+	OnSystemValueChanged.Broadcast(_System->GetSystemType(), max, current);
 }
 
 void ASystem_Controller::Handle_SystemRegenerated()
@@ -44,6 +44,6 @@ void ASystem_Controller::Handle_SystemRegenerated()
 
 void ASystem_Controller::Handle_SystemDepleted()
 {
-	//TODO Broadcast to GM that system has been depleted
+	OnDepleted.Broadcast(this, _System->GetSystemType());
 }
 
