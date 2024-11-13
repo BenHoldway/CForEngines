@@ -1,9 +1,11 @@
 #include "Game Managers/GM_FPS.h"
 
+#include "Character/AIC_FPS.h"
+#include "Character/CustomPawnStart.h"
+#include "Character/PC_FPS.h"
 #include "Character/Components/Controllable.h"
 #include "Game Managers/GameRule.h"
 #include "Game Managers/GameRule_Systems.h"
-#include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 #include "Systems/System.h"
 
@@ -15,13 +17,22 @@ AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Player, const FStri
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), foundActors);
 		for(AActor* actor : foundActors)
 		{
-			_PlayerStarts.Add(actor);
+			if(Player->IsA(AAIC_FPS::StaticClass()))
+				{ _EnemyStarts.Add(actor); }
+			else
+				{ _PlayerStarts.Add(actor); }
 		}
 	}
-	if(_PlayerStarts.Num() > 0)
+	
+	if(_PlayerStarts.Num() > 0 && Player->IsA(APC_FPS::StaticClass()))
 	{
 		return _PlayerStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
 	}
+	if(_EnemyStarts.Num() > 0 && Player->IsA(AAIC_FPS::StaticClass()))
+	{
+		return _EnemyStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
+	}
+	
 	return nullptr;
 }
  
@@ -36,7 +47,25 @@ void AGM_FPS::Logout(AController* Exiting)
 	_PlayerControllers.Remove(Exiting);
 	Super::Logout(Exiting);
 }
- 
+
+void AGM_FPS::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UWorld* world = GetWorld();
+	if(world == nullptr || _EnemyControllerClass == nullptr) { return; }
+
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = GetOwner();
+	spawnParams.Instigator = GetInstigator();
+	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+	FVector location(0, 0, 0);
+	FRotator rotation = FRotator::ZeroRotator;
+	
+	world->SpawnActor(_EnemyControllerClass, &location, &rotation, spawnParams);
+}
+
 void AGM_FPS::HandleMatchIsWaitingToStart()
 {
 	TArray<UActorComponent*> outComponents;

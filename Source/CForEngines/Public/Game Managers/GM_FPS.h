@@ -4,6 +4,9 @@
 #include "GameFramework/GameMode.h"
 #include "GM_FPS.generated.h"
 
+enum ESystemType : int;
+class AAIC_FPS;
+class ACustomPawnStart;
 class UGameRule;
 
 UCLASS()
@@ -21,12 +24,19 @@ protected:
 	int _GameRulesLeft;
 UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UGameRule>> _GameRuleManagers;
-	
-	TArray<TObjectPtr<AActor>> _PlayerStarts;
- 
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<TObjectPtr<AActor>> _PlayerStarts;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<TObjectPtr<AActor>> _EnemyStarts;
+	
 	TArray<TObjectPtr<AController>> _PlayerControllers;
- 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AAIC_FPS> _EnemyControllerClass;
+
+	virtual void BeginPlay() override;
+	
 	virtual void HandleMatchIsWaitingToStart() override;
 	virtual void HandleMatchHasStarted() override;
 	virtual void HandleMatchHasEnded() override;

@@ -12,12 +12,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/WBP_System.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/AI_Controller.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/BP_CustomPawnStart.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/BP_EnemyPawnStart.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/HiHat.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/0/KF/IPSALDIL5L5C2U7DN2EI96.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/0V/81JED5PCAV9DP28B65ZETY.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/C/MH/FLWW7GMZQF4OBJ309YDMLA.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/CustomPawnStart.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/CustomPawnStart.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_SystemDisplayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_SystemDisplayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/4/7Y/D4NQNSK5PIRKTACCE94YP3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/4/7Y/D4NQNSK5PIRKTACCE94YP3.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_GM_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_GM_FPS.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_PC_Debug.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/AY/02U9INWHSK6L86AJ1U1BDM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -553,6 +567,7 @@
       <workItem from="1730808613762" duration="5583000" />
       <workItem from="1730970979920" duration="8757000" />
       <workItem from="1731057480550" duration="2615000" />
+      <workItem from="1731488927550" duration="8023000" />
     </task>
     <servers />
   </component>

@@ -6,6 +6,8 @@
 
 class UAISense_Sight;
 class UAIPerceptionComponent;
+class APawn;
+
 UCLASS(Abstract)
 class CFORENGINES_API AAIC_FPS : public AAIController
 {
@@ -23,6 +25,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAIPerceptionComponent> _AIPerception;
 	TObjectPtr<UAISense_Sight> _AISense_Sight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APawn> _EnemyPawn;
 
 private:
 	UFUNCTION()
