@@ -27,7 +27,7 @@ protected:
 	TObjectPtr<UAISense_Sight> _AISense_Sight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<APawn> _EnemyPawn;
+	TSubclassOf<APawn> _EnemyPawn;
 
 private:
 	UFUNCTION()

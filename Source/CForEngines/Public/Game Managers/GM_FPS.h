@@ -15,7 +15,8 @@ class CFORENGINES_API AGM_FPS : public AGameMode
 	GENERATED_BODY()
 
 public:
-	virtual AActor* FindPlayerStart_Implementation(AController* Player, const FString& IncomingName) override;
+	virtual AActor* FindPlayerStart_Implementation(AController* Character, const FString& IncomingName) override;
+	
  
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 	virtual void Logout(AController* Exiting) override;
@@ -29,6 +30,8 @@ UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<AActor>> _PlayerStarts;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<TObjectPtr<AActor>> _EnemyStarts;
+
+	TArray<TObjectPtr<AActor>> _UsedStarts;
 	
 	TArray<TObjectPtr<AController>> _PlayerControllers;
 

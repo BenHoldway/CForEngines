@@ -2,51 +2,11 @@
 
 #include "Character/AIC_FPS.h"
 #include "Character/CustomPawnStart.h"
-#include "Character/PC_FPS.h"
 #include "Character/Components/Controllable.h"
 #include "Game Managers/GameRule.h"
 #include "Game Managers/GameRule_Systems.h"
 #include "Kismet/GameplayStatics.h"
 #include "Systems/System.h"
-
-AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Player, const FString& IncomingName)
-{
-	if(_PlayerStarts.Num() == 0)
-	{
-		TArray<AActor*> foundActors;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), foundActors);
-		for(AActor* actor : foundActors)
-		{
-			if(Player->IsA(AAIC_FPS::StaticClass()))
-				{ _EnemyStarts.Add(actor); }
-			else
-				{ _PlayerStarts.Add(actor); }
-		}
-	}
-	
-	if(_PlayerStarts.Num() > 0 && Player->IsA(APC_FPS::StaticClass()))
-	{
-		return _PlayerStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
-	}
-	if(_EnemyStarts.Num() > 0 && Player->IsA(AAIC_FPS::StaticClass()))
-	{
-		return _EnemyStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
-	}
-	
-	return nullptr;
-}
- 
-void AGM_FPS::PostLogin(APlayerController* NewPlayer)
-{
-	_PlayerControllers.AddUnique(NewPlayer);
-	Super::PostLogin(NewPlayer);
-}
- 
-void AGM_FPS::Logout(AController* Exiting)
-{
-	_PlayerControllers.Remove(Exiting);
-	Super::Logout(Exiting);
-}
 
 void AGM_FPS::BeginPlay()
 {
@@ -64,6 +24,50 @@ void AGM_FPS::BeginPlay()
 	FRotator rotation = FRotator::ZeroRotator;
 	
 	world->SpawnActor(_EnemyControllerClass, &location, &rotation, spawnParams);
+}
+
+AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Character, const FString& IncomingName)
+{
+	if(_PlayerStarts.Num() == 0 || _EnemyStarts.Num() == 0)
+	{
+		TArray<AActor*> foundActors;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), foundActors);
+		
+		for(AActor* actor : foundActors)
+		{
+			if(ACustomPawnStart* pawnStart = Cast<ACustomPawnStart>(actor)) { _EnemyStarts.Add(actor); }
+			else { _PlayerStarts.Add(actor); }
+		}
+	}
+	
+	if(_PlayerStarts.Num() > 0 && Character->IsA(APlayerController::StaticClass()))
+	{
+		AActor* start = _PlayerStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
+		_PlayerStarts.Remove(start);
+		_UsedStarts.Add(start);
+		return start;
+	}
+	if(_EnemyStarts.Num() > 0 && Character->IsA(AAIController::StaticClass()))
+	{
+		AActor* start = _EnemyStarts[FMath::RandRange(0, _EnemyStarts.Num()-1)];
+		_EnemyStarts.Remove(start);
+		_UsedStarts.Add(start);
+		return start;
+	}
+	
+	return nullptr;
+}
+ 
+void AGM_FPS::PostLogin(APlayerController* NewPlayer)
+{
+	_PlayerControllers.AddUnique(NewPlayer);
+	Super::PostLogin(NewPlayer);
+}
+ 
+void AGM_FPS::Logout(AController* Exiting)
+{
+	_PlayerControllers.Remove(Exiting);
+	Super::Logout(Exiting);
 }
 
 void AGM_FPS::HandleMatchIsWaitingToStart()

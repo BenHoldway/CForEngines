@@ -21,7 +21,17 @@ void AAIC_FPS::BeginPlay()
 
 	if(AGM_FPS* GameMode = Cast<AGM_FPS>(UGameplayStatics::GetGameMode(this)))
 	{
-		GameMode->FindPlayerStart_Implementation(this, "Enemy");
+		AActor* spawnActor = GameMode->FindPlayerStart_Implementation(this, "Enemy");
+
+		UWorld* world = GetWorld();
+		if(world == nullptr || _EnemyPawn == nullptr) { return; }
+		
+		FActorSpawnParameters spawnParams;
+		spawnParams.Owner = this;
+		spawnParams.Instigator = nullptr;
+		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		AActor* enemyActor = world->SpawnActor(_EnemyPawn, &spawnActor->GetActorTransform(), spawnParams);
+		OnPossess(Cast<APawn>(enemyActor));
 	}
 }
 
