@@ -4,7 +4,8 @@
 #include "AIController.h"
 #include "AIC_FPS.generated.h"
 
-class UAISense_Sight;
+struct FAIStimulus;
+class UAISenseConfig_Sight;
 class UAIPerceptionComponent;
 class APawn;
 
@@ -24,12 +25,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAIPerceptionComponent> _AIPerception;
-	TObjectPtr<UAISense_Sight> _AISense_Sight;
+	TObjectPtr<UAISenseConfig_Sight> _AISense_Sight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<APawn> _EnemyPawn;
 
 private:
 	UFUNCTION()
-	void Handle_PerceptionUpdated();
+	void Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 };
