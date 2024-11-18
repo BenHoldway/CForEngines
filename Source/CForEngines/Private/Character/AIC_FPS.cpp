@@ -29,7 +29,7 @@ AAIC_FPS::AAIC_FPS()
 
 ETeamAttitude::Type AAIC_FPS::GetTeamAttitudeTowards(const AActor& Other) const
 {
-	FGenericTeamId TeamId(FGenericTeamId::GetTeamIdentifier(&Other));
+	FGenericTeamId TeamId(FGenericTeamId::GetTeamIdentifier(&Other.GetInstigatorController()));
 
 	UE_LOG(LogTemp, Display, TEXT("%s"), *Other.GetName());
 	UE_LOG(LogTemp, Display, TEXT("%d"), TeamId.GetId());
