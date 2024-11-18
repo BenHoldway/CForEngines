@@ -15,10 +15,10 @@ void USystemWidget::NativeConstruct()
 
 void USystemWidget::UpdatePower_Implementation(float newPowerRatio)
 {
-	if(PowerBar) { PowerBar->SetPercent(newPowerRatio); UE_LOG(LogTemp, Display, TEXT("Power Updated")); }
+	if(PowerBar) { PowerBar->SetPercent(newPowerRatio); }
 }
 
 void USystemWidget::UpdateOxygen_Implementation(float newOxygenRatio)
 {
-	if(OxygenBar) { OxygenBar->SetPercent(newOxygenRatio); UE_LOG(LogTemp, Display, TEXT("Oxygen Updated")); }
+	if(OxygenBar) { OxygenBar->SetPercent(newOxygenRatio); }
 }

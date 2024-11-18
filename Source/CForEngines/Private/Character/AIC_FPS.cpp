@@ -2,6 +2,8 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Character/Components/Inputable.h"
+#include "EnvironmentQuery/EnvQueryManager.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "Game Managers/GM_FPS.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -28,13 +30,23 @@ AAIC_FPS::AAIC_FPS()
 ETeamAttitude::Type AAIC_FPS::GetTeamAttitudeTowards(const AActor& Other) const
 {
 	FGenericTeamId TeamId(FGenericTeamId::GetTeamIdentifier(&Other));
+
+	UE_LOG(LogTemp, Display, TEXT("%s"), *Other.GetName());
+	UE_LOG(LogTemp, Display, TEXT("%d"), TeamId.GetId());
+	
 	if(TeamId == FGenericTeamId(1))
 	{
+		UE_LOG(LogTemp, Display, TEXT("Friendly"));
 		return ETeamAttitude::Friendly;
 	}
 	else if (TeamId == FGenericTeamId(2))
 	{
+		UE_LOG(LogTemp, Display, TEXT("Hostile"));
 		return ETeamAttitude::Hostile;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("Neutral"));
 	}
 
 	return ETeamAttitude::Neutral;
@@ -55,11 +67,16 @@ void AAIC_FPS::BeginPlay()
 		spawnParams.Owner = this;
 		spawnParams.Instigator = nullptr;
 		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		
 		AActor* enemyActor = world->SpawnActor(_EnemyPawn, &spawnActor->GetActorTransform(), spawnParams);
+		
 		OnPossess(Cast<APawn>(enemyActor));
 	}
 
 	_AIPerception->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &AAIC_FPS::Handle_TargetPerceptionUpdated);
+
+	FEnvQueryRequest EQR_FindWanderPos = FEnvQueryRequest(_EQS_FindWanderPos, GetPawn());
+	EQR_FindWanderPos.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AAIC_FPS::Handle_FindWanderPosResult);
 }
 
 void AAIC_FPS::OnPossess(APawn* InPawn)
@@ -75,14 +92,28 @@ void AAIC_FPS::OnPossess(APawn* InPawn)
 
 void AAIC_FPS::Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
+	UE_LOG(LogTemp, Display, TEXT("Target Found"));
 	switch(Stimulus.Type)
 	{
 		case 0:
 			GetBlackboardComponent()->SetValueAsObject("TargetActor", Actor);
-			UE_LOG(LogTemp, Display, TEXT("Target Found"));
+			GetBlackboardComponent()->SetValueAsBool("IsAlerted", true);
 			return;
 		default:
+			GetBlackboardComponent()->SetValueAsObject("TargetActor", nullptr);
+			GetBlackboardComponent()->SetValueAsBool("IsAlerted", false);
 			return;
 	}
+}
+
+void AAIC_FPS::Handle_FindWanderPosResult(TSharedPtr<FEnvQueryResult> result)
+{
+	FVector* pos = new FVector(0, 0, GetPawn()->GetActorLocation().Z);
+	if(result->IsSuccessful())
+	{
+		UE_LOG(LogTemp, Display, TEXT("Result Successful"));
+		//GetBlackboardComponent()->SetValueAsVector("WanderPos", *pos);
+	}
+	else { UE_LOG(LogTemp, Display, TEXT("Result Unsuccessful")); }
 }
 

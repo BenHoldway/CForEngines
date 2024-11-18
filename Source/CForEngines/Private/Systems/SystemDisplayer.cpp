@@ -22,7 +22,6 @@ ASystemDisplayer::ASystemDisplayer()
 
 void ASystemDisplayer::UpdatePower(float max, float current)
 {
-	UE_LOG(LogTemp, Display, TEXT("Attempting to Update Power"));
 	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
 	{
 		UE_LOG(LogTemp, Display, TEXT("Updating Power"));
@@ -32,7 +31,6 @@ void ASystemDisplayer::UpdatePower(float max, float current)
 
 void ASystemDisplayer::UpdateOxygen(float max, float current)
 {
-	UE_LOG(LogTemp, Display, TEXT("Attempting to Update Oxygen"));
 	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
 	{
 		UE_LOG(LogTemp, Display, TEXT("Updating Oxygen"));

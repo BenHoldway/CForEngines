@@ -47,11 +47,9 @@ void UGameRule_Systems::Handle_SystemValueChanged(ESystemType systemType, float 
 	switch (systemType)
 	{
 	case ESystemType::Power:
-		UE_LOG(LogTemp, Display, TEXT("Power Updated for Game Rule"));
 		_SystemDisplay->UpdatePower(max, current);
 		break;
 	case ESystemType::Oxygen:
-		UE_LOG(LogTemp, Display, TEXT("Oxygen Updated for Game Rule"));
 		_SystemDisplay->UpdateOxygen(max, current);
 		break;
 	default:

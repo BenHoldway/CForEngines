@@ -239,3 +239,10 @@ void APC_FPS::HideInteractPrompt()
 {
 	_HUDWidget->HideInteractPrompt();
 }
+
+FGenericTeamId APC_FPS::GetGenericTeamId() const
+{
+	FGenericTeamId teamID = FGenericTeamId(2);
+	UE_LOG(LogTemp, Display, TEXT("Returns Player ID"));
+	return teamID;
+}

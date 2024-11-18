@@ -37,7 +37,6 @@ void USystem::SetFaultTimer()
 
 void USystem::Handle_FaultStarted()
 {
-	UE_LOG(LogTemp, Display, TEXT("Fault started from %s"), *GetOwner()->GetName());
 	_FaultHasStarted = true;
 	
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }
@@ -48,8 +47,6 @@ void USystem::Handle_FaultStarted()
 
 void USystem::Handle_FaultStopped()
 {
-	UE_LOG(LogTemp, Display, TEXT("Fault stopped at %s"), *GetOwner()->GetName());
-	UE_LOG(LogTemp, Display, TEXT("Fault stopped at %hhd"), _FaultHasStarted);
 	_FaultHasStarted = false;
 	
 	if(!_TimerManager->IsTimerActive(_ValueChangeTimer)) { _TimerManager->ClearTimer(_ValueChangeTimer); }

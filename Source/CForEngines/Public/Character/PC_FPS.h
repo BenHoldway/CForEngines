@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GenericTeamAgentInterface.h"
 #include "Components/Controllable.h"
 #include "GameFramework/PlayerController.h"
 #include "PC_FPS.generated.h"
@@ -10,7 +11,7 @@ struct FInputActionValue;
 class UInputAction;
 
 UCLASS(Abstract)
-class CFORENGINES_API APC_FPS : public APlayerController, public IControllable
+class CFORENGINES_API APC_FPS : public APlayerController, public IControllable, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 	
@@ -77,5 +78,8 @@ protected:
 	void ShowInteractPrompt();
 	UFUNCTION()
 	void HideInteractPrompt();
+
+public:
+	virtual FGenericTeamId GetGenericTeamId() const override;
 };
 
