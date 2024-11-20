@@ -4,11 +4,10 @@
 #include "Character/Components/HealthComponent.h"
 #include "Character/Components/Interactable.h"
 #include "Character/Components/StaminaComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "Systems/System_Controller.h"
 #include "Weapons/Weapon_Base.h"
 
 
@@ -16,6 +15,9 @@ AP_FPS::AP_FPS()
 {
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	_Camera->SetupAttachment(RootComponent);
+
+	_Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Forwards"));
+	_Arrow->SetupAttachment(RootComponent);
 	
 	_InteractionCollider2 = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Collider"));
 	_InteractionCollider2->SetupAttachment(_Camera);

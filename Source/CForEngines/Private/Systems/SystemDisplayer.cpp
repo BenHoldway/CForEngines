@@ -24,7 +24,6 @@ void ASystemDisplayer::UpdatePower(float max, float current)
 {
 	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
 	{
-		UE_LOG(LogTemp, Display, TEXT("Updating Power"));
 		ISystemable::Execute_UpdatePower(_SystemWidget, current/max);
 	}
 }
@@ -33,7 +32,6 @@ void ASystemDisplayer::UpdateOxygen(float max, float current)
 {
 	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
 	{
-		UE_LOG(LogTemp, Display, TEXT("Updating Oxygen"));
 		ISystemable::Execute_UpdateOxygen(_SystemWidget, current/max);
 	}
 }

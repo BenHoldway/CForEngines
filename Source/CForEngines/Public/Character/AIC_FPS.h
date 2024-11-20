@@ -35,9 +35,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<APawn> _EnemyPawn;
 
+	TObjectPtr<UBlackboardComponent> _Blackboard;
+
 private:
 	UFUNCTION()
 	void Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	UFUNCTION()
+	void Handle_TargetPerceptionForgotten(AActor* Actor);
 
 	void Handle_FindWanderPosResult(TSharedPtr<FEnvQueryResult> result);
 };

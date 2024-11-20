@@ -60,6 +60,9 @@ protected:
 	TObjectPtr<UCapsuleComponent> _InteractionCollider2;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<UArrowComponent> _Arrow;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UHealthComponent> _Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaminaComponent> _Stamina2;
