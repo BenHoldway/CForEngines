@@ -10,6 +10,7 @@ struct FAIStimulus;
 class UAISenseConfig_Sight;
 class UAIPerceptionComponent;
 class APawn;
+class USkeletalMesh;
 
 UCLASS(Abstract)
 class CFORENGINES_API AAIC_FPS : public AAIController
@@ -36,6 +37,9 @@ protected:
 	TSubclassOf<APawn> _EnemyPawn;
 
 	TObjectPtr<UBlackboardComponent> _Blackboard;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<USkeletalMesh> _Skeleton;
 
 private:
 	UFUNCTION()

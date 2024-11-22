@@ -1,6 +1,7 @@
 #include "Character/AIC_FPS.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Character/P_FPS.h"
 #include "Character/Components/Inputable.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
@@ -83,6 +84,11 @@ void AAIC_FPS::OnPossess(APawn* InPawn)
 	if(UKismetSystemLibrary::DoesImplementInterface(InPawn, UInputable::StaticClass()))
 	{
 		RunBehaviorTree(IInputable::Execute_GetBehaviorTree(InPawn));
+	}
+
+	if(AP_FPS* pawn = Cast<AP_FPS>(InPawn))
+	{
+		pawn->OverrideSkeletonMesh(_Skeleton);
 	}
 }
 

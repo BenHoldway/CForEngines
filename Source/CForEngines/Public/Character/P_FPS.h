@@ -45,6 +45,8 @@ public:
 
 	virtual UBehaviorTree* GetBehaviorTree_Implementation() override;
 
+	void OverrideSkeletonMesh(USkeletalMesh* mesh);
+
 	UPROPERTY(BlueprintAssignable)
 	FPawnDamagedSignature OnPawnDamaged;
 	FPawnStaminaChangedSignature OnPawnStaminaChanged;

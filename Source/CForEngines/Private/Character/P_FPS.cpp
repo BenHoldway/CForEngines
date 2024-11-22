@@ -51,7 +51,6 @@ void AP_FPS::BeginPlay()
 
 	_InteractionCollider2->SetCapsuleHalfHeight(_InteractionRange);
 	_InteractionCollider2->SetRelativeLocation(FVector(_InteractionRange, 0, 0));
-	//_InteractionCollider2->SetRelativeRotation(FRotator(0, 90, 0));
 	
 	
 	_MovementComponent = GetCharacterMovement();
@@ -173,6 +172,11 @@ UInputMappingContext* AP_FPS::GetMappingContext_Implementation()
 UBehaviorTree* AP_FPS::GetBehaviorTree_Implementation()
 {
 	return _BehaviorTree;
+}
+
+void AP_FPS::OverrideSkeletonMesh(USkeletalMesh* mesh)
+{
+	GetMesh()->SetSkeletalMesh(mesh); 
 }
 
 AActor* AP_FPS::GetClosest(TArray<FHitResult> hit)
