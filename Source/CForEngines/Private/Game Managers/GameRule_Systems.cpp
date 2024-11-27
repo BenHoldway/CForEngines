@@ -1,5 +1,8 @@
 #include "Game Managers/GameRule_Systems.h"
 
+#include "LightObject.h"
+#include "Engine/Light.h"
+#include "Kismet/GameplayStatics.h"
 #include "Systems/System.h"
 #include "Systems/SystemDisplayer.h"
 #include "Systems/System_Controller.h"
@@ -16,12 +19,12 @@ void UGameRule_Systems::Init()
 
 	ASystem_Controller::OnSystemRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemRegistered);
 	ASystemDisplayer::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemDisplayRegistered);
+	ALightObject::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_LightRegistered);
 }
 
 void UGameRule_Systems::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void UGameRule_Systems::Handle_SystemRegistered(ASystem_Controller* systemController)
@@ -35,6 +38,11 @@ void UGameRule_Systems::Handle_SystemRegistered(ASystem_Controller* systemContro
 	{
 		controller->OnSystemValueChanged.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemValueChanged);
 	}
+}
+
+void UGameRule_Systems::Handle_LightRegistered(ALightObject* light)
+{
+	_Lights.AddUnique(light);
 }
 
 void UGameRule_Systems::Handle_SystemDisplayRegistered(ASystemDisplayer* systemDisplayer)
@@ -60,6 +68,24 @@ void UGameRule_Systems::Handle_SystemValueChanged(ESystemType systemType, float 
 
 void UGameRule_Systems::Handle_SystemDepleted(ASystem_Controller* systemController, ESystemType systemType)
 {
-	OnSystemDepleted.Broadcast(systemType);
+	switch (systemType)
+	{
+	case ESystemType::Power:
+		for(ALightObject* lightActor : _Lights)
+		{
+			if(UKismetSystemLibrary::DoesImplementInterface(lightActor, UTurnoffable::StaticClass()))
+			{
+				ITurnoffable::Execute_TurnOff(lightActor);
+			}
+		}
+		break;
+	case ESystemType::Oxygen:
+		UE_LOG(LogTemp, Display, TEXT("Dead"));
+		OnSystemDepleted.Broadcast(systemType);
+		break;
+	default:
+		break;
+	}
+	
 }
 

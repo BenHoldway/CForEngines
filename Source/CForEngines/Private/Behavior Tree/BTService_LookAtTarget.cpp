@@ -13,7 +13,8 @@ UBTService_LookAtTarget::UBTService_LookAtTarget()
  
 	Key_Pawn.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_LookAtTarget, Key_Pawn), APawn::StaticClass());
 	Key_TargetActor.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_LookAtTarget, Key_TargetActor), AActor::StaticClass());
-	//Key_RotationTime.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_LookAtTarget, Key_RotationTime));
+	Key_WanderPos.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_LookAtTarget, Key_WanderPos));
+	Key_RotateTime.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_LookAtTarget, Key_RotateTime));
 }
 
 void UBTService_LookAtTarget::InitializeFromAsset(UBehaviorTree& Asset)
@@ -25,6 +26,8 @@ void UBTService_LookAtTarget::InitializeFromAsset(UBehaviorTree& Asset)
 	{
 		Key_Pawn.ResolveSelectedKey(*behaviourTree);
 		Key_TargetActor.ResolveSelectedKey(*behaviourTree);
+		Key_WanderPos.ResolveSelectedKey(*behaviourTree);
+		Key_RotateTime.ResolveSelectedKey(*behaviourTree);
 	}
 }
 
@@ -37,11 +40,12 @@ void UBTService_LookAtTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	if(behaviourTree == nullptr || thisActor == nullptr) { return; }
 
 	FVector dir;
-	if(targetActor == nullptr) { dir = thisActor->GetActorForwardVector(); }
+	if(targetActor == nullptr) { dir = behaviourTree->GetValueAsVector(Key_WanderPos.SelectedKeyName) - thisActor->GetActorLocation(); }
 	else { dir = targetActor->GetActorLocation() - thisActor->GetActorLocation(); }
 
-	//FRotator currentDir = FMath::FInterpTo(thisActor->GetActorRotation(), dir.Rotation(), GetWorld()->GetDeltaSeconds(), behaviourTree->GetValueAsFloat(Key_RotationTime.SelectedKeyName));
-	thisActor->SetActorRotation(dir.Rotation());
+	FRotator newRotator = FRotator(0.0f, dir.Rotation().Yaw, 0.0f);
+	//thisActor->SetActorRotation(FRotator(FQuat::Slerp(thisActor->GetActorQuat(), FQuat::MakeFromRotator(newRotator), behaviourTree->GetValueAsFloat(Key_RotateTime.SelectedKeyName) * DeltaSeconds)));
+	thisActor->SetActorRotation(FRotator(0.0f, dir.Rotation().Yaw, 0.0f));
 	
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }

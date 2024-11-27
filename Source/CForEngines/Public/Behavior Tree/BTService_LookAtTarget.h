@@ -20,5 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, Category="Blackboard")
 	FBlackboardKeySelector Key_TargetActor;
 	UPROPERTY(EditAnywhere, Category="Blackboard")
-	FBlackboardKeySelector Key_RotationTime;
+	FBlackboardKeySelector Key_WanderPos;
+	UPROPERTY(EditAnywhere, Category="Blackboard")
+	FBlackboardKeySelector Key_RotateTime;
 };

@@ -4,6 +4,7 @@
 #include "GameFramework/GameMode.h"
 #include "GM_FPS.generated.h"
 
+class UGM_Widget;
 enum ESystemType : int;
 class AAIC_FPS;
 class ACustomPawnStart;
@@ -23,7 +24,8 @@ public:
  
 protected:
 	int _GameRulesLeft;
-UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UGameRule>> _GameRuleManagers;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -34,9 +36,17 @@ UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<AActor>> _UsedStarts;
 	
 	TArray<TObjectPtr<AController>> _PlayerControllers;
+	TArray<TObjectPtr<AController>> _EnemyControllers;
+
+	int _PlayerSpawnIndex;
+	int _EnemySpawnIndex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AAIC_FPS> _EnemyControllerClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGM_Widget> _GMWidgetClass;
+	TObjectPtr<UGM_Widget> _GMWidget;
 
 	virtual void BeginPlay() override;
 	
@@ -48,6 +58,15 @@ UPROPERTY(EditAnywhere, BlueprintReadWrite)
  
 	virtual bool ReadyToStartMatch_Implementation() override;
 	virtual bool ReadyToEndMatch_Implementation() override;
+
+	UFUNCTION()
+	void ResetEntities();
+
+	UFUNCTION()
+	void ReplayGame();
+
+	UFUNCTION()
+	void PlayerDead();
 
 private:
 	UFUNCTION()

@@ -19,16 +19,22 @@ void APC_FPS::BeginPlay()
 	{
 		_HUDWidget = CreateWidget<UWidget_HUD, APC_FPS*>(this, _HUDWidgetClass);
 		_HUDWidget->AddToViewport();
+		_HUDWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
 	if(AP_FPS* currentPawn = Cast<AP_FPS>(GetPawn()))
 	{
+		currentPawn->OnPawnDead.AddUniqueDynamic(this, &APC_FPS::Dead);
 		currentPawn->OnPawnDamaged.AddUniqueDynamic(this, &APC_FPS::Damaged);
 		currentPawn->OnPawnStaminaChanged.AddUniqueDynamic(this, &APC_FPS::StaminaChanged);
 
 		currentPawn->OnShowInteractPrompt.AddUniqueDynamic(this, &APC_FPS::ShowInteractPrompt);
 		currentPawn->OnHideInteractPrompt.AddUniqueDynamic(this, &APC_FPS::HideInteractPrompt);
 	}
+
+	_IsFlashlightOn = true;
+	SetInputMode(FInputModeGameOnly());
+	SetShowMouseCursor(false);
 }
 
 
@@ -58,6 +64,8 @@ void APC_FPS::SetupInputComponent()
 
 		EIP->BindAction(_CrouchAction, ETriggerEvent::Started, this, &APC_FPS::CrouchPressed);
 		EIP->BindAction(_CrouchAction, ETriggerEvent::Completed, this, &APC_FPS::CrouchReleased);
+		
+		EIP->BindAction(_FlashlightToggleAction, ETriggerEvent::Started, this, &APC_FPS::FlashlightToggle);
 	}
 }
 
@@ -201,6 +209,18 @@ void APC_FPS::Interact()
 	}
 }
 
+void APC_FPS::FlashlightToggle()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			_IsFlashlightOn = !_IsFlashlightOn;
+			IInputable::Execute_Input_FlashlightToggle(currentPawn, _IsFlashlightOn);
+		}
+	}
+}
+
 void APC_FPS::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -220,9 +240,15 @@ void APC_FPS::AddPoints_Implementation(int points)
 	_HUDWidget->UpdateScore(_Score);
 }
 
+void APC_FPS::Dead(AController* causer)
+{
+	OnPlayerDead.Broadcast();
+}
+
 void APC_FPS::Damaged(float currentHealth, float maxHealth, float changedHealth)
 {
 	_HUDWidget->UpdateHealth(currentHealth / maxHealth);
+	OnPlayerDamaged.Broadcast();
 }
 
 void APC_FPS::StaminaChanged(float currentStamina, float maxStamina, float changedStamina)
@@ -245,4 +271,25 @@ FGenericTeamId APC_FPS::GetGenericTeamId() const
 	FGenericTeamId teamID = FGenericTeamId(2);
 	UE_LOG(LogTemp, Display, TEXT("Returns Player ID"));
 	return teamID;
+}
+
+void APC_FPS::Reset_Implementation(FVector pos)
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		currentPawn->SetActorLocation(pos);
+	}
+}
+
+void APC_FPS::DisablePlayerInput_Implementation()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		SetShowMouseCursor(true);
+		SetInputMode(FInputModeGameAndUI());
+		//UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(this, _GMWidget, EMouseLockMode::LockOnCapture, false);
+		currentPawn->DisableInput(this);
+
+		_HUDWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

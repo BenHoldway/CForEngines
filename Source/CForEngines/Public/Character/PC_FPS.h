@@ -3,18 +3,31 @@
 #include "CoreMinimal.h"
 #include "GenericTeamAgentInterface.h"
 #include "Components/Controllable.h"
+#include "Components/Resetable.h"
 #include "GameFramework/PlayerController.h"
 #include "PC_FPS.generated.h"
 
 class UWidget_HUD;
 struct FInputActionValue;
 class UInputAction;
+class UGM_Widget;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDeadSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDamagedSignature);
 
 UCLASS(Abstract)
-class CFORENGINES_API APC_FPS : public APlayerController, public IControllable, public IGenericTeamAgentInterface
+class CFORENGINES_API APC_FPS : public APlayerController, public IControllable, public IGenericTeamAgentInterface, public IResetable
 {
 	GENERATED_BODY()
 	
+public:
+	virtual FGenericTeamId GetGenericTeamId() const override;
+	virtual void Reset_Implementation(FVector pos) override;
+
+	virtual void DisablePlayerInput_Implementation() override;
+
+	FPlayerDeadSignature OnPlayerDead;
+	FPlayerDamagedSignature OnPlayerDamaged;
 	
 protected:	
 	UPROPERTY(EditAnywhere, Category="Input")
@@ -38,6 +51,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> _InteractAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> _FlashlightToggleAction;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UWidget_HUD> _HUDWidgetClass;
 	TObjectPtr<UWidget_HUD> _HUDWidget;
@@ -47,9 +63,10 @@ protected:
 	bool _IsCrouching;
 	bool _IsMoving;
 	bool _IsSprinting;
+	bool _IsFlashlightOn;
 
 	virtual void BeginPlay() override;
-	
+
 	virtual void SetupInputComponent() override;
 
 	void Move(const FInputActionValue& value);
@@ -63,10 +80,14 @@ protected:
 	void CrouchPressed();
 	void CrouchReleased();
 	void Interact();
+	void FlashlightToggle();
 
 	virtual void OnPossess(APawn* InPawn) override;
 
 	virtual void AddPoints_Implementation(int points) override;
+
+	UFUNCTION()
+	void Dead(AController* causer);
 
 	UFUNCTION()
 	void Damaged(float currentHealth, float maxHealth, float changedHealth);
@@ -79,7 +100,5 @@ protected:
 	UFUNCTION()
 	void HideInteractPrompt();
 
-public:
-	virtual FGenericTeamId GetGenericTeamId() const override;
 };
 

@@ -61,14 +61,14 @@ void AAIC_FPS::BeginPlay()
 		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 		
 		AActor* enemyActor = world->SpawnActor(_EnemyPawn, &spawnActor->GetActorTransform(), spawnParams);
+		APawn* enemyPawn = Cast<APawn>(enemyActor);
 		
-		OnPossess(Cast<APawn>(enemyActor));
+		OnPossess(enemyPawn);
 	}
 
 	_Blackboard = GetBlackboardComponent();
 
 	_AIPerception->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &AAIC_FPS::Handle_TargetPerceptionUpdated);
-	_AIPerception->OnTargetPerceptionForgotten.AddUniqueDynamic(this, &AAIC_FPS::Handle_TargetPerceptionForgotten);
 
 	_AISense_Sight->SightRadius = _Blackboard->GetValueAsFloat("EngagingDistance");
 	_AISense_Sight->LoseSightRadius = _Blackboard->GetValueAsFloat("EngagingDistance");
@@ -89,26 +89,30 @@ void AAIC_FPS::OnPossess(APawn* InPawn)
 	if(AP_FPS* pawn = Cast<AP_FPS>(InPawn))
 	{
 		pawn->OverrideSkeletonMesh(_Skeleton);
+		pawn->OverrideFlashlightColour(_FlashlightColour);
 	}
 }
 
-void AAIC_FPS::Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+void AAIC_FPS::Reset_Implementation(FVector pos)
 {
+	GetPawn()->SetActorLocation(pos);
+}
+
+void AAIC_FPS::Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{	
 	switch(Stimulus.Type)
 	{
 		case 0:
-			if(_Blackboard->GetValueAsObject("TargetActor") == Actor) { _Blackboard->ClearValue("TargetActor"); }
-			else { _Blackboard->SetValueAsObject("TargetActor", Actor); }
+			if(Stimulus.WasSuccessfullySensed()) { _Blackboard->SetValueAsObject("TargetActor", Actor); }
+			else
+			{
+				_Blackboard->ClearValue("TargetActor");
+				_Blackboard->ClearValue("Distance");
+			}
 			return;
 		default:
 			return;
 	}
-}
-
-void AAIC_FPS::Handle_TargetPerceptionForgotten(AActor* Actor)
-{
-	UE_LOG(LogTemp, Display, TEXT("Target Forgotten"));
-	_Blackboard->ClearValue("TargetActor");
 }
 
 void AAIC_FPS::Handle_FindWanderPosResult(TSharedPtr<FEnvQueryResult> result)

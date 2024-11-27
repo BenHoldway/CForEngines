@@ -4,6 +4,7 @@
 #include "GameRule.h"
 #include "GameRule_Systems.generated.h"
 
+class ALightObject;
 class ASystemDisplayer;
 enum ESystemType : int;
 class ASystem_Controller;
@@ -36,8 +37,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<ASystemDisplayer> _SystemDisplay;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<TObjectPtr<ALightObject>> _Lights;
+
 	UFUNCTION()
 	void Handle_SystemRegistered(ASystem_Controller* systemController);
+	UFUNCTION()
+	void Handle_LightRegistered(ALightObject* light);
 	UFUNCTION()
 	void Handle_SystemDisplayRegistered(ASystemDisplayer* systemDisplayer);
 	UFUNCTION()

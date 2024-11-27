@@ -8,7 +8,6 @@ UHealthComponent::UHealthComponent()
 	_CurrentHealth = 0.0f;
 }
 
-
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -19,10 +18,14 @@ void UHealthComponent::BeginPlay()
 void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
 	AController* InstigatedBy, AActor* DamageCauser)
 {
-	const float change = FMath::Min(_CurrentHealth, Damage);
-	_CurrentHealth -= change;
+	//Damage_Implementation(InstigatedBy);
+}
 
-	OnDamaged.Broadcast(_CurrentHealth, _MaxHealth, change);
+void UHealthComponent::Damage_Implementation(AController* InstigatedBy)
+{
+	_CurrentHealth -= 1;
+
+	OnDamaged.Broadcast(_CurrentHealth, _MaxHealth, 1);
 	
 	if(_CurrentHealth == 0.0f)
 	{

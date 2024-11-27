@@ -49,6 +49,9 @@ public:
 	void Input_Interact();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Input_FlashlightToggle(bool isFlashlightOn);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	UInputMappingContext* GetMappingContext();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "P_FPS.generated.h"
 
+class USpotLightComponent;
 class USphereComponent;
 class UMovementComponent;
 class AWeapon_Base;
@@ -15,6 +16,7 @@ class UCameraComponent;
 class UCapsuleComponent;
 class UBehaviorTree;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPawnDeadSignature, AController*, causer);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnDamagedSignature, float, newHealth, float, maxHealth, float, changeInHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FPawnStaminaChangedSignature, float, currentStamina, float, maxStamina, float, changedStamina);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FShowInteractPromptSignature);
@@ -22,7 +24,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHideInteractPromptSignature);
 
 
 UCLASS()
-class CFORENGINES_API AP_FPS : public ACharacter, public IInputable
+class CFORENGINES_API AP_FPS : public ACharacter, public IInputable 
 {
 	GENERATED_BODY()
 
@@ -40,14 +42,18 @@ public:
 	virtual void Input_CrouchPressed_Implementation() override;
 	virtual void Input_CrouchReleased_Implementation() override;
 	virtual void Input_Interact_Implementation() override;
+	virtual void Input_FlashlightToggle_Implementation(bool isFlashlightOn) override;
 
 	virtual UInputMappingContext* GetMappingContext_Implementation() override;
+	virtual void DisableInput(APlayerController* PlayerController) override;
 
 	virtual UBehaviorTree* GetBehaviorTree_Implementation() override;
-
+	
 	void OverrideSkeletonMesh(USkeletalMesh* mesh);
+	void OverrideFlashlightColour(FLinearColor colour);
 
 	UPROPERTY(BlueprintAssignable)
+	FPawnDeadSignature OnPawnDead;
 	FPawnDamagedSignature OnPawnDamaged;
 	FPawnStaminaChangedSignature OnPawnStaminaChanged;
 	FShowInteractPromptSignature OnShowInteractPrompt;
@@ -58,6 +64,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> _Camera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<USpotLightComponent> _Flashlight;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCapsuleComponent> _InteractionCollider2;
 
@@ -102,6 +111,8 @@ protected:
 	AActor* _Interactable;
 	
 	FTimerHandle _CrouchTimer;
+
+	float _FlashlightNormalIntensity;
 
 	void BeginPlay() override;
 	/*void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;

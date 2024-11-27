@@ -9,12 +9,13 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Weapons/Weapon_Base.h"
+#include "Components/SpotLightComponent.h"
 
 
 AP_FPS::AP_FPS()
 {
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	_Camera->SetupAttachment(RootComponent);
+	_Camera->SetupAttachment(RootComponent);	
 
 	_Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Forwards"));
 	_Arrow->SetupAttachment(RootComponent);
@@ -23,12 +24,17 @@ AP_FPS::AP_FPS()
 	_InteractionCollider2->SetupAttachment(_Camera);
 	_InteractionCollider2->OnComponentBeginOverlap.AddUniqueDynamic(this, &AP_FPS::Handle_InteractionBeginOverlap);
 	_InteractionCollider2->OnComponentEndOverlap.AddUniqueDynamic(this, &AP_FPS::Handle_InteractionEndOverlap);
+
+	_Flashlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flashlight"));
+	_Flashlight->SetupAttachment(_Camera);
 	
 	_Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 	_Stamina2 = CreateDefaultSubobject<UStaminaComponent>(TEXT("Stamina"));
 
 	_WeaponAttachPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Weapon Attack Point"));
 	_WeaponAttachPoint->SetupAttachment(_Camera);
+
+	_InteractionRange = 50.0f;
 }
 
 void AP_FPS::BeginPlay()
@@ -55,6 +61,9 @@ void AP_FPS::BeginPlay()
 	
 	_MovementComponent = GetCharacterMovement();
 	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
+	//if(!IsPawnControlled()) { _MovementComponent->bOrientRotationToMovement = true; }
+
+	_FlashlightNormalIntensity = _Flashlight->Intensity;
 }
 
 /*void AP_FPS::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
@@ -132,6 +141,11 @@ void AP_FPS::Input_Interact_Implementation()
 	}
 }
 
+void AP_FPS::Input_FlashlightToggle_Implementation(bool isFlashlightOn)
+{
+	_Flashlight->SetIntensity(isFlashlightOn ? _FlashlightNormalIntensity : 0.0f);
+}
+
 void AP_FPS::Input_Look_Implementation(FVector2D value)
 {
 	AddActorWorldRotation(FRotator(0.0f, value.X, 0.0f));
@@ -169,6 +183,11 @@ UInputMappingContext* AP_FPS::GetMappingContext_Implementation()
 	return _MappingContext;
 }
 
+void AP_FPS::DisableInput(APlayerController* PlayerController)
+{
+	Super::DisableInput(PlayerController);
+}
+
 UBehaviorTree* AP_FPS::GetBehaviorTree_Implementation()
 {
 	return _BehaviorTree;
@@ -177,6 +196,11 @@ UBehaviorTree* AP_FPS::GetBehaviorTree_Implementation()
 void AP_FPS::OverrideSkeletonMesh(USkeletalMesh* mesh)
 {
 	GetMesh()->SetSkeletalMesh(mesh); 
+}
+
+void AP_FPS::OverrideFlashlightColour(FLinearColor colour)
+{
+	_Flashlight->SetLightColor(colour);
 }
 
 AActor* AP_FPS::GetClosest(TArray<FHitResult> hit)
@@ -195,7 +219,7 @@ AActor* AP_FPS::GetClosest(TArray<FHitResult> hit)
 
 void AP_FPS::Handle_HealthDead(AController* causer)
 {
-	
+	OnPawnDead.Broadcast(causer);
 }
 
 void AP_FPS::Handle_HealthDamaged(float currentHealth, float maxHealth, float changedHealth)
@@ -230,7 +254,7 @@ void AP_FPS::Handle_InteractionBeginOverlap(UPrimitiveComponent* OverlappedCompo
 		ActorsToIgnore.Add(this);
 
 		UKismetSystemLibrary::SphereTraceSingle(world, start, end, _InteractionCollider2->GetScaledCapsuleRadius(), UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2),
-			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Red, FLinearColor::Green, 5.0f);
+			false, ActorsToIgnore, EDrawDebugTrace::ForDuration, hit, true, FLinearColor::Transparent, FLinearColor::Transparent, 0.0f);
 		
 		if(hit.GetActor() == OtherActor)
 		{

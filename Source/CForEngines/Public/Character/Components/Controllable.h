@@ -17,4 +17,6 @@ class CFORENGINES_API IControllable
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void AddPoints(int points);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void DisablePlayerInput();
 };

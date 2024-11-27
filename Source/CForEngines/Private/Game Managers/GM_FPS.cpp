@@ -2,15 +2,20 @@
 
 #include "Character/AIC_FPS.h"
 #include "Character/CustomPawnStart.h"
+#include "Character/PC_FPS.h"
 #include "Character/Components/Controllable.h"
 #include "Game Managers/GameRule.h"
 #include "Game Managers/GameRule_Systems.h"
+#include "Game Managers/GM_Widget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Systems/System.h"
 
 void AGM_FPS::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_PlayerSpawnIndex = 0;
+	_EnemySpawnIndex = 0;
 
 	UWorld* world = GetWorld();
 	if(world == nullptr || _EnemyControllerClass == nullptr) { return; }
@@ -24,6 +29,13 @@ void AGM_FPS::BeginPlay()
 	FRotator rotation = FRotator::ZeroRotator;
 	
 	world->SpawnActor(_EnemyControllerClass, &location, &rotation, spawnParams);
+
+	if(_GMWidgetClass)
+	{
+		_GMWidget = CreateWidget<UGM_Widget, UWorld*>(GetWorld(), _GMWidgetClass);
+		_GMWidget->AddToViewport();
+		_GMWidget->OnReplay.AddUniqueDynamic(this, &AGM_FPS::ReplayGame);
+	}
 }
 
 AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Character, const FString& IncomingName)
@@ -36,22 +48,34 @@ AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Character, const FS
 		for(AActor* actor : foundActors)
 		{
 			if(ACustomPawnStart* pawnStart = Cast<ACustomPawnStart>(actor)) { _EnemyStarts.Add(actor); }
-			else { _PlayerStarts.Add(actor); }
+			else
+			{
+				_PlayerStarts.Add(actor);
+			}
 		}
 	}
-	
-	if(_PlayerStarts.Num() > 0 && Character->IsA(APlayerController::StaticClass()))
-	{
-		AActor* start = _PlayerStarts[FMath::RandRange(0, _PlayerStarts.Num()-1)];
-		_PlayerStarts.Remove(start);
-		_UsedStarts.Add(start);
-		return start;
-	}
+
 	if(_EnemyStarts.Num() > 0 && Character->IsA(AAIController::StaticClass()))
 	{
-		AActor* start = _EnemyStarts[FMath::RandRange(0, _EnemyStarts.Num()-1)];
-		_EnemyStarts.Remove(start);
-		_UsedStarts.Add(start);
+		if(_EnemyControllers.Contains(Character)) { return _EnemyControllers[_EnemySpawnIndex - 1]; }
+		AActor* start = _EnemyStarts[_EnemySpawnIndex];
+		_EnemyControllers.AddUnique(Character);
+		_EnemySpawnIndex++;
+		return start;
+	}
+	if(_PlayerStarts.Num() > 0 && Character->IsA(APC_FPS::StaticClass()))
+	{
+		if(_PlayerControllers.Contains(Character)) { return _PlayerStarts[_PlayerSpawnIndex - 1]; }
+		AActor* start = _PlayerStarts[_PlayerSpawnIndex];
+		_PlayerControllers.AddUnique(Character);
+		_PlayerSpawnIndex++;
+
+		if(APC_FPS* playerController = Cast<APC_FPS>(Character))
+		{
+			playerController->OnPlayerDead.AddUniqueDynamic(this, &AGM_FPS::PlayerDead);
+			playerController->OnPlayerDamaged.AddUniqueDynamic(this, &AGM_FPS::ResetEntities);
+		}
+		
 		return start;
 	}
 	
@@ -60,13 +84,13 @@ AActor* AGM_FPS::FindPlayerStart_Implementation(AController* Character, const FS
  
 void AGM_FPS::PostLogin(APlayerController* NewPlayer)
 {
-	_PlayerControllers.AddUnique(NewPlayer);
+	//_PlayerControllers.AddUnique(NewPlayer);
 	Super::PostLogin(NewPlayer);
 }
  
 void AGM_FPS::Logout(AController* Exiting)
 {
-	_PlayerControllers.Remove(Exiting);
+	//_PlayerControllers.Remove(Exiting);
 	Super::Logout(Exiting);
 }
 
@@ -134,6 +158,35 @@ bool AGM_FPS::ReadyToStartMatch_Implementation() { return false; }
  
 bool AGM_FPS::ReadyToEndMatch_Implementation() { return false; }
 
+void AGM_FPS::ResetEntities()
+{
+	for(int playerController = 0; playerController < _PlayerControllers.Num(); playerController++)
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(_PlayerControllers[playerController], UResetable::StaticClass()))
+		{
+			IResetable::Execute_Reset(_PlayerControllers[playerController], _PlayerStarts[playerController]->GetActorLocation());
+		}
+	}
+
+	for(int enemyController = 0; enemyController < _EnemyControllers.Num(); enemyController++)
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(_EnemyControllers[enemyController], UResetable::StaticClass()))
+		{
+			IResetable::Execute_Reset(_EnemyControllers[enemyController], _EnemyStarts[enemyController]->GetActorLocation());
+		}
+	}
+}
+
+void AGM_FPS::ReplayGame()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+}
+
+void AGM_FPS::PlayerDead()
+{
+	Handle_GameRuleCompleted(false);
+}
+
 void AGM_FPS::Handle_GameRulePointsScored(AController* scorer, int points)
 {
 	if(UKismetSystemLibrary::DoesImplementInterface(scorer, UControllable::StaticClass()))
@@ -144,19 +197,20 @@ void AGM_FPS::Handle_GameRulePointsScored(AController* scorer, int points)
 
 void AGM_FPS::Handle_GameRuleCompleted(bool successful)
 {
-	if(successful) { UE_LOG(LogTemp, Display, TEXT("Success")); }
-	else { UE_LOG(LogTemp, Display, TEXT("Failure")); }
+	for(AController* playerController : _PlayerControllers)
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(playerController, UControllable::StaticClass()))
+		{
+			IControllable::Execute_DisablePlayerInput(playerController);
+
+			if(successful) { _GMWidget->ShowWinScreen(); }
+			else { _GMWidget->ShowLoseScreen(); }
+		}
+	}
 }
 
 void AGM_FPS::Handle_GameRuleSystemDepleted(ESystemType systemType)
 {
-	switch (systemType)
-	{
-		case ESystemType::Power:
-			UE_LOG(LogTemp, Display, TEXT("Power Depleted"))
-		case ESystemType::Oxygen:
-			UE_LOG(LogTemp, Display, TEXT("Oxygen Depleted"))
-		default:
-			break;
-	}
+	if(systemType == ESystemType::Oxygen) { Handle_GameRuleCompleted(false); }
 }
+

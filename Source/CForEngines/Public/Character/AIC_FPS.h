@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Components/Resetable.h"
 #include "AIC_FPS.generated.h"
 
 struct FEnvQueryResult;
@@ -13,7 +14,7 @@ class APawn;
 class USkeletalMesh;
 
 UCLASS(Abstract)
-class CFORENGINES_API AAIC_FPS : public AAIController
+class CFORENGINES_API AAIC_FPS : public AAIController, public IResetable
 {
 	GENERATED_BODY()
 
@@ -25,6 +26,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
+	virtual void Reset_Implementation(FVector pos) override;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAIPerceptionComponent> _AIPerception;
@@ -41,11 +43,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<USkeletalMesh> _Skeleton;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FLinearColor _FlashlightColour;
+
 private:
 	UFUNCTION()
 	void Handle_TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
-	UFUNCTION()
-	void Handle_TargetPerceptionForgotten(AActor* Actor);
 
 	void Handle_FindWanderPosResult(TSharedPtr<FEnvQueryResult> result);
 };

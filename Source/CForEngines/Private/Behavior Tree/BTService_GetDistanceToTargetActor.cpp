@@ -30,8 +30,13 @@ void UBTService_GetDistanceToTargetActor::TickNode(UBehaviorTreeComponent& Owner
 	float DeltaSeconds)
 {
 	UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
+
+	AActor* thisActor = Cast<AActor>(BBComp->GetValueAsObject(Key_Pawn.SelectedKeyName));
+	AActor* targetActor = Cast<AActor>(BBComp->GetValueAsObject(Key_TargetActor.SelectedKeyName));
+
+	if(thisActor == nullptr || targetActor == nullptr) { return; }
 	
-	float dist = (Cast<AActor>(BBComp->GetValueAsObject(Key_Pawn.SelectedKeyName))->GetActorLocation() - Cast<AActor>(BBComp->GetValueAsObject(Key_TargetActor.SelectedKeyName))->GetActorLocation()).Length();
+	float dist = (thisActor->GetActorLocation() - targetActor->GetActorLocation()).Length();
 	BBComp->SetValueAsFloat(Key_Distance.SelectedKeyName, dist);
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }
