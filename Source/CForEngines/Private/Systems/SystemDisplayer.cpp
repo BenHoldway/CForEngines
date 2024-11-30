@@ -3,7 +3,6 @@
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/WidgetComponent.h"
-#include "Kismet/KismetSystemLibrary.h"
 #include "Systems/SystemWidget.h"
 
 ASystemDisplayer::ASystemDisplayer()
@@ -20,22 +19,6 @@ ASystemDisplayer::ASystemDisplayer()
 	_SystemWidgetComponent->SetupAttachment(_Collider);
 }
 
-void ASystemDisplayer::UpdatePower(float max, float current)
-{
-	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
-	{
-		ISystemable::Execute_UpdatePower(_SystemWidget, current/max);
-	}
-}
-
-void ASystemDisplayer::UpdateOxygen(float max, float current)
-{
-	if(UKismetSystemLibrary::DoesImplementInterface(_SystemWidget, USystemable::StaticClass()))
-	{
-		ISystemable::Execute_UpdateOxygen(_SystemWidget, current/max);
-	}
-}
-
 void ASystemDisplayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -44,5 +27,25 @@ void ASystemDisplayer::BeginPlay()
 	_SystemWidget->NativeConstruct();
 
 	OnRegister.Broadcast(this);
+}
+
+void ASystemDisplayer::UpdatePower(float max, float current)
+{
+	_SystemWidget->UpdatePower(current/max);
+}
+
+void ASystemDisplayer::UpdateOxygen(float max, float current)
+{
+	_SystemWidget->UpdateOxygen(current/max);
+}
+
+void ASystemDisplayer::StopPowerAlarm()
+{
+	_SystemWidget->StopPowerAlarm();
+}
+
+void ASystemDisplayer::StopOxygenAlarm()
+{
+	_SystemWidget->StopOxygenAlarm();
 }
 

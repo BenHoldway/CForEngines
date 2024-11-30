@@ -5,6 +5,7 @@
 #include "Character/Components/Interactable.h"
 #include "Character/Components/StaminaComponent.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -14,6 +15,9 @@
 
 AP_FPS::AP_FPS()
 {
+	_AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Sound"));
+	_AudioComponent->SetupAttachment(RootComponent);
+	
 	_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	_Camera->SetupAttachment(RootComponent);	
 
@@ -61,46 +65,9 @@ void AP_FPS::BeginPlay()
 	
 	_MovementComponent = GetCharacterMovement();
 	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
-	//if(!IsPawnControlled()) { _MovementComponent->bOrientRotationToMovement = true; }
 
 	_FlashlightNormalIntensity = _Flashlight->Intensity;
 }
-
-/*void AP_FPS::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
-{
-	if(HalfHeightAdjust == 0.0f || !_Camera) { return; }
-
-	float startEyeHeight = BaseEyeHeight;
-	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
-
-	_CrouchEyeOffset.Z += (startEyeHeight - BaseEyeHeight) + HalfHeightAdjust;
-	_Camera->SetRelativeLocation(FVector(0, 0, BaseEyeHeight));
-}
-
-void AP_FPS::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
-{
-	if(HalfHeightAdjust == 0.0f || !_Camera) { return; }
-
-	float startEyeHeight = BaseEyeHeight;
-	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
-
-	_CrouchEyeOffset.Z += (startEyeHeight - BaseEyeHeight) - HalfHeightAdjust;
-	_Camera->SetRelativeLocation(FVector(0, 0, BaseEyeHeight));
-	GetWorld()->GetTimerManager().SetTimer(_CrouchTimer, this, &AP_FPS::LerpCrouchCamera, 0.01f);
-}
-
-void AP_FPS::CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult)
-{
-	if(!_Camera) { return; }
-
-	_Camera->GetCameraView(DeltaTime, OutResult);
-	OutResult.Location += _CrouchEyeOffset;
-}
-
-void AP_FPS::LerpCrouchCamera()
-{
-	//_CrouchEyeOffset = (1.0f )
-}*/
 
 
 void AP_FPS::Input_Move_Implementation(FVector2D value)

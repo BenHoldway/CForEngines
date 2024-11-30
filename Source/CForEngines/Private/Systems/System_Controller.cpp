@@ -23,8 +23,12 @@ void ASystem_Controller::BeginPlay()
 	_System->Init(this);
 	_System->OnValueChanged.AddUniqueDynamic(this, &ASystem_Controller::Handle_SystemValueChanged);
 	_System->OnDepleted.AddUniqueDynamic(this, &ASystem_Controller::Handle_SystemDepleted);
+	_System->OnFaultStateChanged.AddUniqueDynamic(this, &ASystem_Controller::Handle_SystemStateChanged);
 
+	_SystemType = _System->GetSystemType();
+	
 	OnSystemRegister.Broadcast(this);
+	
 }
 
 void ASystem_Controller::Interact_Implementation()
@@ -34,7 +38,7 @@ void ASystem_Controller::Interact_Implementation()
 
 void ASystem_Controller::Handle_SystemValueChanged(float max, float current)
 {
-	OnSystemValueChanged.Broadcast(_System->GetSystemType(), max, current);
+	OnSystemValueChanged.Broadcast(_SystemType, max, current);
 }
 
 void ASystem_Controller::Handle_SystemRegenerated()
@@ -44,6 +48,11 @@ void ASystem_Controller::Handle_SystemRegenerated()
 
 void ASystem_Controller::Handle_SystemDepleted()
 {
-	OnDepleted.Broadcast(this, _System->GetSystemType());
+	OnDepleted.Broadcast(this, _SystemType);
+}
+
+void ASystem_Controller::Handle_SystemStateChanged(bool isOn)
+{
+	OnSystemStateChanged.Broadcast(this, _SystemType, isOn);
 }
 

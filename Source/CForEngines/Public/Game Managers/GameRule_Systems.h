@@ -27,6 +27,7 @@ public:
 	static inline FGameRuleSystemRequestTargetsSignature OnRequestSystems;
 
 	virtual void Init() override;
+	void UpdateClock(int hours, int minutes);
 
 protected:
 	virtual void BeginPlay() override;
@@ -50,6 +51,8 @@ protected:
 	void Handle_SystemValueChanged(ESystemType systemType, float max, float current);
 	UFUNCTION()
 	void Handle_SystemDepleted(ASystem_Controller* systemController, ESystemType systemType);
+	UFUNCTION()
+	void Handle_SystemStateChanged(ASystem_Controller* systemController, ESystemType systemType, bool isOn);
 
 public:
 };

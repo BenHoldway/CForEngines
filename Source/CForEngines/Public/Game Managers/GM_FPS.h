@@ -4,6 +4,7 @@
 #include "GameFramework/GameMode.h"
 #include "GM_FPS.generated.h"
 
+class UGameRule_Systems;
 class UGM_Widget;
 enum ESystemType : int;
 class AAIC_FPS;
@@ -48,6 +49,8 @@ protected:
 	TSubclassOf<UGM_Widget> _GMWidgetClass;
 	TObjectPtr<UGM_Widget> _GMWidget;
 
+	TObjectPtr<UGameRule_Systems> _GameRuleSystem;
+
 	virtual void BeginPlay() override;
 	
 	virtual void HandleMatchIsWaitingToStart() override;
@@ -66,6 +69,11 @@ protected:
 	void ReplayGame();
 
 	UFUNCTION()
+	void PauseGame(APlayerController* playerController);
+	UFUNCTION()
+	void UnpauseGame();
+
+	UFUNCTION()
 	void PlayerDead();
 
 private:
@@ -75,4 +83,6 @@ private:
 	void Handle_GameRulePointsScored(AController* scorer, int points);
 	UFUNCTION()
 	void Handle_GameRuleSystemDepleted(ESystemType systemType);
+	UFUNCTION()
+	void Handle_GameRuleUpdateClock(int hours, int minutes);
 };

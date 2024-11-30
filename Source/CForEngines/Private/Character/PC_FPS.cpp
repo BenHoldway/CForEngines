@@ -66,6 +66,8 @@ void APC_FPS::SetupInputComponent()
 		EIP->BindAction(_CrouchAction, ETriggerEvent::Completed, this, &APC_FPS::CrouchReleased);
 		
 		EIP->BindAction(_FlashlightToggleAction, ETriggerEvent::Started, this, &APC_FPS::FlashlightToggle);
+		
+		EIP->BindAction(_PauseGameAction, ETriggerEvent::Started, this, &APC_FPS::PauseGameToggle);
 	}
 }
 
@@ -221,6 +223,12 @@ void APC_FPS::FlashlightToggle()
 	}
 }
 
+void APC_FPS::PauseGameToggle()
+{
+	OnPauseGame.Broadcast(this);
+	DisablePlayerInput_Implementation();
+}
+
 void APC_FPS::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -291,5 +299,17 @@ void APC_FPS::DisablePlayerInput_Implementation()
 		currentPawn->DisableInput(this);
 
 		_HUDWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void APC_FPS::EnablePlayerInput_Implementation()
+{
+	if(APawn* currentPawn = GetPawn())
+	{
+		SetShowMouseCursor(false);
+		SetInputMode(FInputModeGameOnly());
+		currentPawn->EnableInput(this);
+
+		_HUDWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 }

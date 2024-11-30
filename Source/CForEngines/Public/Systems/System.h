@@ -8,8 +8,7 @@ class ASystem_Controller;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValueChangedSignature, float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDepletedSignature);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStartedSignature);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFaultStoppedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FChangeFaultStateSignature, bool, isOn);
 
 UENUM()
 enum ESystemType
@@ -39,9 +38,7 @@ public:
 	FValueChangedSignature OnValueChanged;
 
 	UPROPERTY(BlueprintAssignable)
-	FFaultStartedSignature OnFaultStarted;
-	UPROPERTY(BlueprintAssignable)
-	FFaultStoppedSignature OnFaultStopped;
+	FChangeFaultStateSignature OnFaultStateChanged;
 
 protected:
 	UPROPERTY()

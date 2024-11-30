@@ -2,16 +2,42 @@
 
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 void UGM_Widget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
+	
+	ShowMainMenu();
+	if(PauseMenu) { PauseMenu->SetVisibility(ESlateVisibility::Hidden); }
 	if(WinScreen) { WinScreen->SetVisibility(ESlateVisibility::Hidden); }
 	if(LoseScreen) { LoseScreen->SetVisibility(ESlateVisibility::Hidden); }
 
-	if(WinScreenReplayButton) { WinScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ReplayGame); }
-	if(LoseScreenReplayButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ReplayGame); }
+	if(WinScreenReplayButton) { WinScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
+	if(LoseScreenReplayButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
+	if(PlayGameButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
+	if(ExitGameButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ExitGame); }
+	if(MainMenuButton) { MainMenuButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ShowMainMenu); }
+}
+
+void UGM_Widget::ShowMainMenu()
+{
+	if(MainMenu) { MainMenu->SetVisibility(ESlateVisibility::Visible); }
+}
+
+void UGM_Widget::HideMainMenu()
+{
+	if(MainMenu) { MainMenu->SetVisibility(ESlateVisibility::Hidden); }
+}
+
+void UGM_Widget::ShowPauseMenu()
+{
+	if(PauseMenu) { PauseMenu->SetVisibility(ESlateVisibility::Visible); }
+}
+
+void UGM_Widget::HidePauseMenu()
+{
+	if(PauseMenu) { PauseMenu->SetVisibility(ESlateVisibility::Hidden); OnUnpause.Broadcast(); }
 }
 
 void UGM_Widget::ShowWinScreen()
@@ -26,7 +52,12 @@ void UGM_Widget::ShowLoseScreen()
 	if(LoseScreen) { LoseScreen->SetVisibility(ESlateVisibility::Visible); }
 }
 
-void UGM_Widget::ReplayGame()
+void UGM_Widget::PlayGame()
 {
 	OnReplay.Broadcast();
+}
+
+void UGM_Widget::ExitGame()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
 }

@@ -10,14 +10,19 @@ class UImage;
 class UProgressBar;
 
 UCLASS(Abstract, BlueprintType)
-class CFORENGINES_API USystemWidget : public UUserWidget, public ISystemable
+class CFORENGINES_API USystemWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
 	virtual void NativeConstruct() override;
-	virtual void UpdatePower_Implementation(float newPowerRatio) override;
-	virtual void UpdateOxygen_Implementation(float newOxygenRatio) override;
+	void UpdatePower(float newPowerRatio);
+	void UpdateOxygen(float newOxygenRatio);
+
+	void StopPowerAlarm();
+	void StopOxygenAlarm();
+
+	void UpdateClock(int hours, int minutes);
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -30,14 +35,19 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UImage> OxygenAlarm;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FLinearColor _AlarmNormalColour;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FLinearColor _AlarmLitColour;
+
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> Clock;
 
 	bool IsShowingPowerAlarm;
 	bool IsShowingOxygenAlarm;
 
-	void StartPowerAlarm();
-	void StartOxygenAlarm();
+	void Handle_PowerAlarm();
+	void Handle_OxygenAlarm();
 
 	FTimerHandle _PowerAlarmTimer;
 	FTimerHandle _OxygenAlarmTimer;

@@ -19,4 +19,6 @@ public:
 	void AddPoints(int points);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void DisablePlayerInput();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void EnablePlayerInput();
 };

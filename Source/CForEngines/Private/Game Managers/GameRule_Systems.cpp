@@ -1,7 +1,6 @@
 #include "Game Managers/GameRule_Systems.h"
 
 #include "LightObject.h"
-#include "Engine/Light.h"
 #include "Kismet/GameplayStatics.h"
 #include "Systems/System.h"
 #include "Systems/SystemDisplayer.h"
@@ -33,11 +32,8 @@ void UGameRule_Systems::Handle_SystemRegistered(ASystem_Controller* systemContro
 
 	_Systems.Add(systemController);
 	systemController->OnDepleted.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemDepleted);
-
-	for(ASystem_Controller* controller : _Systems)
-	{
-		controller->OnSystemValueChanged.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemValueChanged);
-	}
+	systemController->OnSystemValueChanged.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemValueChanged);
+	systemController->OnSystemStateChanged.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemStateChanged);
 }
 
 void UGameRule_Systems::Handle_LightRegistered(ALightObject* light)
@@ -89,3 +85,23 @@ void UGameRule_Systems::Handle_SystemDepleted(ASystem_Controller* systemControll
 	
 }
 
+void UGameRule_Systems::Handle_SystemStateChanged(ASystem_Controller* systemController, ESystemType systemType,
+	bool isOn)
+{
+	switch (systemType)
+	{
+	case ESystemType::Power:
+		_SystemDisplay->StopPowerAlarm();
+		break;
+	case ESystemType::Oxygen:
+		_SystemDisplay->StopOxygenAlarm();
+		break;
+	default:
+		break;
+	}
+}
+
+void UGameRule_Systems::UpdateClock(int hours, int minutes)
+{
+	_SystemDisplay->Up
+}

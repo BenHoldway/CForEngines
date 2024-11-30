@@ -14,6 +14,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSystemRegisteredSignature, ASystem_
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSystemValueChangedSignature, ESystemType, systemType, float, max, float, current);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSystemDepletedSignature, ASystem_Controller*, systemController,
 	ESystemType, systemType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSystemStateChangedSignature, ASystem_Controller*, systemController,
+	ESystemType, systemType, bool, isOn);
 
 UCLASS(Abstract)
 class CFORENGINES_API ASystem_Controller : public AActor, public IInteractable
@@ -25,7 +27,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FSystemDepletedSignature OnDepleted;
+	UPROPERTY(BlueprintAssignable)
 	FSystemValueChangedSignature OnSystemValueChanged;
+	UPROPERTY(BlueprintAssignable)
+	FSystemStateChangedSignature OnSystemStateChanged;
 	
 	static inline FSystemRegisteredSignature OnSystemRegister;
 
@@ -38,6 +43,8 @@ protected:
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<USystem> _System;
+
+	ESystemType _SystemType;
 	
 	virtual void BeginPlay() override;
 
@@ -50,4 +57,6 @@ public:
 	void Handle_SystemRegenerated();
 	UFUNCTION()
 	void Handle_SystemDepleted();
+	UFUNCTION()
+	void Handle_SystemStateChanged(bool isOn);
 };

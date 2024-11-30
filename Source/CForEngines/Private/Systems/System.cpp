@@ -1,7 +1,5 @@
 #include "Systems/System.h"
 
-#include "Systems/System_Controller.h"
-
 USystem::USystem()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -43,6 +41,8 @@ void USystem::Handle_FaultStarted()
 	
 	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_ValueChanged,
 	_ValueChangeTime, true);
+
+	OnFaultStateChanged.Broadcast(true);
 }
 
 void USystem::Handle_FaultStopped()
@@ -53,6 +53,7 @@ void USystem::Handle_FaultStopped()
 
 	_TimerManager->SetTimer(_ValueChangeTimer, this, &USystem::Handle_Regenerated,
 _ValueChangeTime, true);
+	OnFaultStateChanged.Broadcast(false);
 }
 
 void USystem::Handle_ValueChanged()

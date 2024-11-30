@@ -12,83 +12,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/BP_CeilingLight.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/3/MC/92LNRBLTOUD74BL3LM8CS8.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/7/3Q/HYI3RVTF1AW34RTHD87Y8X.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/7/YR/N82P90AKFW0E1H375SEO1B.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/3Z/MGFNJSME2L21KWSWUFRS4Z.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/QG/RWBL0AK7YOPVL0H6A6QP10.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/9/ZW/F9BJ1EEGSWKTBAMO1XW2YZ.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Behavior Tree/BTTask_KillPlayer.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/Damageable.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/Resetable.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_Widget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/LightObject.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Turnoffable.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Behavior Tree/BTTask_KillPlayer.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Damageable.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Resetable.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_Widget.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/LightObject.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Turnoffable.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/CForEngines/Sounds/MainMenuAmbience.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI_Controller.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BB_FPS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_EQS_TestPawn.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_EnemyPawnStart.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_EnemyPawnStart.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_GM_FPS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_MyFirstActor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_PActor.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_PActor_FPS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_PActor_FPS.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_PController.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_Projectile.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_SystemDisplayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_SystemDisplayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP_Weapon_Projectile.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BT_FPS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/EQ_FindWanderPos.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/GM_C4E_Project.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/GM_C4E_Project.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Crouch.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Interact.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Jump.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Look.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Move.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Shoot.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IA_Sprint.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/IMC_PlayerControls.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyFirstActor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyFirstActor.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/System_Controller.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/System_Controller.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/WBP_HUD.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/WBP_System.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/1/AO/8BNTBG7BVWMNJHLLW5V85F.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/1/AO/8BNTBG7BVWMNJHLLW5V85F.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/5/D3/CQXWZ5PQPU3J50U87TLTAN.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/6/KY/HDZKQBAHNLW0FIZUI5DCW1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/6/KY/HDZKQBAHNLW0FIZUI5DCW1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/6/PG/2UASEAAJLMBE3LQS1BUDDN.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/6/PG/2UASEAAJLMBE3LQS1BUDDN.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/3U/0QJA7XFZZ1VLXRSJCC0BN2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/8/3U/0QJA7XFZZ1VLXRSJCC0BN2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/8H/ILTRDQ8Q7V9MJGL42SZQNR.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/8H/ILTRDQ8Q7V9MJGL42SZQNR.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/WA/4E4K34Q5GVG6R6ZZU1KBHR.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/A/WA/4E4K34Q5GVG6R6ZZU1KBHR.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/D/O9/E2NWUCSKGPQTR5Q4HGRNQ5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/D/O9/E2NWUCSKGPQTR5Q4HGRNQ5.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/E/NJ/WTYUFDJSFKIP25960ZNN8B.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/TestLevel/E/NJ/WTYUFDJSFKIP25960ZNN8B.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Behavior Tree/BTService_GetDistanceToTargetActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Behavior Tree/BTService_GetDistanceToTargetActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Behavior Tree/BTService_LookAtTarget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Behavior Tree/BTService_LookAtTarget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/AIC_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/HealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/HealthComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_Widget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_Widget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Clock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Clock.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Behavior Tree/BTService_LookAtTarget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Behavior Tree/BTService_LookAtTarget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/AIC_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Controllable.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Controllable.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/HealthComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Inputable.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Inputable.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_Widget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_Widget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Clock.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Clock.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemDisplayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemDisplayer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,122 +49,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Program Files/UE_5.4/Engine/Source/Runtime/Engine/Classes/Components/AudioComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://D:/Program Files/UE_5.4/Engine/Source/Runtime/Engine/Classes/GameFramework/Controller.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://D:/Program Files/UE_5.4/Engine/Source/Runtime/Engine/Classes/GameFramework/PlayerController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://D:/Program Files/UE_5.4/Engine/Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/StaminaComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/Components/Widget_HUD.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -245,7 +80,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "C++ Project.CForEngines.executor": "Run",
+    "C++ Project.CForEngines.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "EnemyAI",
     "ignore.virus.scanning.warn.message": "true",
@@ -256,13 +91,6 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\h019546n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\h019546n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\h019546n\\AppData\\Local\\Symbols\\src"
-    ]
   }
 }]]></component>
   <component name="RunManager" selected="C++ Project.CForEngines">
@@ -733,6 +561,7 @@
       <workItem from="1732610722702" duration="3144000" />
       <workItem from="1732614789335" duration="741000" />
       <workItem from="1732615557327" duration="45682000" />
+      <workItem from="1732971832148" duration="16493000" />
     </task>
     <servers />
   </component>

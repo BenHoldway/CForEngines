@@ -60,7 +60,10 @@ public:
 	FHideInteractPromptSignature OnHideInteractPrompt;
 	
 
-protected:	
+protected:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+	TObjectPtr<UAudioComponent> _AudioComponent;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> _Camera;
 

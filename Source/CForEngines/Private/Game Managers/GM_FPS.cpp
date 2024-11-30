@@ -5,6 +5,7 @@
 #include "Character/PC_FPS.h"
 #include "Character/Components/Controllable.h"
 #include "Game Managers/GameRule.h"
+#include "Game Managers/GameRule_Clock.h"
 #include "Game Managers/GameRule_Systems.h"
 #include "Game Managers/GM_Widget.h"
 #include "Kismet/GameplayStatics.h"
@@ -35,6 +36,7 @@ void AGM_FPS::BeginPlay()
 		_GMWidget = CreateWidget<UGM_Widget, UWorld*>(GetWorld(), _GMWidgetClass);
 		_GMWidget->AddToViewport();
 		_GMWidget->OnReplay.AddUniqueDynamic(this, &AGM_FPS::ReplayGame);
+		_GMWidget->OnUnpause.AddUniqueDynamic(this, &AGM_FPS::UnpauseGame);
 	}
 }
 
@@ -107,10 +109,15 @@ void AGM_FPS::HandleMatchIsWaitingToStart()
 			rule->OnComplete.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleCompleted);
 			rule->OnPointsScored.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRulePointsScored);
 			_GameRulesLeft++;
-
+			
 			if(UGameRule_Systems* systemRule = Cast<UGameRule_Systems>(rule))
 			{
+				_GameRuleSystem = systemRule;
 				systemRule->OnSystemDepleted.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleSystemDepleted);
+			}
+			if(UGameRule_Clock* clockRule = Cast<UGameRule_Clock>(rule))
+			{
+				clockRule->OnUpdateClock.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleUpdateClock);
 			}
 		}
 	}
@@ -182,6 +189,27 @@ void AGM_FPS::ReplayGame()
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
 
+void AGM_FPS::PauseGame(APlayerController* playerController)
+{
+	_GMWidget->ShowPauseMenu();
+
+	if(UKismetSystemLibrary::DoesImplementInterface(playerController, UControllable::StaticClass()))
+	{
+		IControllable::Execute_DisablePlayerInput(playerController);
+	}
+}
+
+void AGM_FPS::UnpauseGame()
+{
+	for(AController* playerController : _PlayerControllers)
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(playerController, UControllable::StaticClass()))
+		{
+			IControllable::Execute_EnablePlayerInput(playerController);
+		}
+	}
+}
+
 void AGM_FPS::PlayerDead()
 {
 	Handle_GameRuleCompleted(false);
@@ -212,5 +240,10 @@ void AGM_FPS::Handle_GameRuleCompleted(bool successful)
 void AGM_FPS::Handle_GameRuleSystemDepleted(ESystemType systemType)
 {
 	if(systemType == ESystemType::Oxygen) { Handle_GameRuleCompleted(false); }
+}
+
+void AGM_FPS::Handle_GameRuleUpdateClock(int hours, int minutes)
+{
+	_GameRuleSystem->UpdateClock(hours, minutes);
 }
 

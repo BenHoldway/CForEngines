@@ -14,6 +14,7 @@ class UGM_Widget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDeadSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDamagedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPauseGameSignature, APlayerController*, playerController);
 
 UCLASS(Abstract)
 class CFORENGINES_API APC_FPS : public APlayerController, public IControllable, public IGenericTeamAgentInterface, public IResetable
@@ -25,9 +26,11 @@ public:
 	virtual void Reset_Implementation(FVector pos) override;
 
 	virtual void DisablePlayerInput_Implementation() override;
+	virtual void EnablePlayerInput_Implementation() override;
 
 	FPlayerDeadSignature OnPlayerDead;
 	FPlayerDamagedSignature OnPlayerDamaged;
+	FPauseGameSignature OnPauseGame;
 	
 protected:	
 	UPROPERTY(EditAnywhere, Category="Input")
@@ -53,6 +56,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> _FlashlightToggleAction;
+
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> _PauseGameAction;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UWidget_HUD> _HUDWidgetClass;
@@ -81,6 +87,7 @@ protected:
 	void CrouchReleased();
 	void Interact();
 	void FlashlightToggle();
+	void PauseGameToggle();
 
 	virtual void OnPossess(APawn* InPawn) override;
 
