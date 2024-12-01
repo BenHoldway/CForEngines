@@ -75,7 +75,9 @@ protected:
 
 	virtual void SetupInputComponent() override;
 
+	void StartedMove(const FInputActionValue& value);
 	void Move(const FInputActionValue& value);
+	void MoveCancelled(const FInputActionValue& value);
 	void SprintPressed();
 	void SprintReleased();
 	void Look(const FInputActionValue& value);

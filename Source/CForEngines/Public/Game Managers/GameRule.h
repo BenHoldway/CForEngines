@@ -25,4 +25,5 @@ public:
 protected:
 	void BroadcastComplete(bool successful);
 	void BroadcastPointsScored(AController* scorer, int points);
+	void BeginPlay() override;
 };

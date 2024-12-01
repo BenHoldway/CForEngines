@@ -10,6 +10,9 @@ void USystemWidget::NativeConstruct()
 
 	if(PowerBar) { PowerBar->SetPercent(1.f); }
 	if(OxygenBar) { OxygenBar->SetPercent(1.f); }
+
+	PowerAlarm->SetBrushTintColor(_AlarmNormalColour);
+	OxygenAlarm->SetBrushTintColor(_AlarmNormalColour);
 }
 
 void USystemWidget::UpdatePower(float newPowerRatio)
@@ -19,7 +22,7 @@ void USystemWidget::UpdatePower(float newPowerRatio)
 	if(!IsShowingPowerAlarm)
 	{
 		float currentPowerRatio = PowerBar->GetPercent();
-		if(newPowerRatio < currentPowerRatio) { IsShowingPowerAlarm = true; }
+		if(newPowerRatio < currentPowerRatio && !IsShowingPowerAlarm) { Handle_PowerAlarm(); }
 	}
 	
 	PowerBar->SetPercent(newPowerRatio);
@@ -29,9 +32,9 @@ void USystemWidget::UpdateOxygen(float newOxygenRatio)
 {
 	if(!OxygenBar) { return; }
 
-	if(!IsShowingPowerAlarm)
+	if(!IsShowingOxygenAlarm)
 	{
-		float currentOxygenRatio = PowerBar->GetPercent();
+		float currentOxygenRatio = OxygenBar->GetPercent();
 		if(newOxygenRatio < currentOxygenRatio && !IsShowingOxygenAlarm) { Handle_OxygenAlarm(); }
 	}
 	
@@ -42,7 +45,11 @@ void USystemWidget::Handle_PowerAlarm()
 {
 	if(!IsShowingPowerAlarm) { IsShowingPowerAlarm = true; }
 
-	if(PowerAlarm->GetBrush().TintColor == _AlarmNormalColour) { PowerAlarm->SetBrushTintColor(_AlarmNormalColour); }
+	if(PowerAlarm->GetBrush().TintColor == _AlarmNormalColour)
+	{
+		PowerAlarm->SetBrushTintColor(_AlarmLitColour);
+		if(!_IsPlayingAlarmSound) { OnPlayAlarmSound.Broadcast(); _IsPlayingAlarmSound = true; }
+	}
 	else { PowerAlarm->SetBrushTintColor(_AlarmNormalColour); }
 
 	if(!GetWorld()->GetTimerManager().IsTimerActive(_PowerAlarmTimer))
@@ -54,6 +61,8 @@ void USystemWidget::StopPowerAlarm()
 	if(GetWorld()->GetTimerManager().IsTimerActive(_PowerAlarmTimer)) { GetWorld()->GetTimerManager().ClearTimer(_PowerAlarmTimer); }
 	IsShowingPowerAlarm = false;
 	PowerAlarm->SetBrushTintColor(_AlarmNormalColour);
+
+	if(!GetWorld()->GetTimerManager().IsTimerActive(_OxygenAlarmTimer)) { OnStopAlarmSound.Broadcast(); _IsPlayingAlarmSound = false; }
 }
 
 
@@ -62,7 +71,11 @@ void USystemWidget::Handle_OxygenAlarm()
 {
 	if(!IsShowingOxygenAlarm) { IsShowingOxygenAlarm = true; }
 
-	if(OxygenAlarm->GetBrush().TintColor == _AlarmNormalColour) { OxygenAlarm->SetBrushTintColor(_AlarmNormalColour); }
+	if(OxygenAlarm->GetBrush().TintColor == _AlarmNormalColour)
+	{
+		OxygenAlarm->SetBrushTintColor(_AlarmLitColour);
+		if(!_IsPlayingAlarmSound) { OnPlayAlarmSound.Broadcast(); _IsPlayingAlarmSound = true; }
+	}
 	else { OxygenAlarm->SetBrushTintColor(_AlarmNormalColour); }
 
 	if(!GetWorld()->GetTimerManager().IsTimerActive(_OxygenAlarmTimer))
@@ -74,6 +87,8 @@ void USystemWidget::StopOxygenAlarm()
 	if(GetWorld()->GetTimerManager().IsTimerActive(_OxygenAlarmTimer)) { GetWorld()->GetTimerManager().ClearTimer(_OxygenAlarmTimer); }
 	IsShowingOxygenAlarm = false;
 	OxygenAlarm->SetBrushTintColor(_AlarmNormalColour);
+
+	if(!GetWorld()->GetTimerManager().IsTimerActive(_PowerAlarmTimer)) { OnStopAlarmSound.Broadcast(); _IsPlayingAlarmSound = false; }
 }
 
 void USystemWidget::UpdateClock(int hours, int minutes)

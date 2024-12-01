@@ -5,6 +5,11 @@ UGameRule::UGameRule()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+void UGameRule::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void UGameRule::Init()
 {
 }

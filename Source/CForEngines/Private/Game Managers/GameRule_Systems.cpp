@@ -16,14 +16,18 @@ void UGameRule_Systems::Init()
 {
 	Super::Init();
 
-	ASystem_Controller::OnSystemRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemRegistered);
-	ASystemDisplayer::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemDisplayRegistered);
-	ALightObject::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_LightRegistered);
+	for(ASystem_Controller* systemController : _Systems)
+	{
+		systemController->Init();
+	}
 }
 
 void UGameRule_Systems::BeginPlay()
 {
 	Super::BeginPlay();
+	ASystem_Controller::OnSystemRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemRegistered);
+	ASystemDisplayer::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_SystemDisplayRegistered);
+	ALightObject::OnRegister.AddUniqueDynamic(this, &UGameRule_Systems::Handle_LightRegistered);
 }
 
 void UGameRule_Systems::Handle_SystemRegistered(ASystem_Controller* systemController)
@@ -91,10 +95,10 @@ void UGameRule_Systems::Handle_SystemStateChanged(ASystem_Controller* systemCont
 	switch (systemType)
 	{
 	case ESystemType::Power:
-		_SystemDisplay->StopPowerAlarm();
+		if(!isOn) { _SystemDisplay->StopPowerAlarm(); }
 		break;
 	case ESystemType::Oxygen:
-		_SystemDisplay->StopOxygenAlarm();
+		if(!isOn) { _SystemDisplay->StopOxygenAlarm(); }
 		break;
 	default:
 		break;

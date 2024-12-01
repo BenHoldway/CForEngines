@@ -13,18 +13,13 @@ UGameRule_Clock::UGameRule_Clock()
 void UGameRule_Clock::Init()
 {
 	Super::Init();
-
-	//timer time
-	//in game clock time: 12am - 6am
-	//hour (timer seconds): timer time / 6
-	//minute (timer seconds) = hour / 60
 	
 	_TimerManager = &GetWorld()->GetTimerManager();
 
 	//time for each minute * 60 (total time for 1 hour) * 6 (for the 6 hours)
 	float totalTime = _SecondsForEachInGameMinute * 60 * 6;
 	_TimerManager->SetTimer(_ClockTimer, this, &UGameRule_Clock::Handle_ClockCompleted, totalTime);
-	_TimerManager->SetTimer(_UpdateClockTimer, this, &UGameRule_Clock::Handle_UpdateClock, _SecondsForEachInGameMinute * _ClockMinuteIncrement);
+	_TimerManager->SetTimer(_UpdateClockTimer, this, &UGameRule_Clock::Handle_UpdateClock, _SecondsForEachInGameMinute * _ClockMinuteIncrement, true);
 }
 
 void UGameRule_Clock::Handle_UpdateClock()
@@ -36,6 +31,8 @@ void UGameRule_Clock::Handle_UpdateClock()
 		_CurrentHours += 1;
 	}
 	OnUpdateClock.Broadcast(_CurrentHours, _CurrentMinutes);
+
+	if(_CurrentHours == 6) { _TimerManager->ClearTimer(_UpdateClockTimer); }
 }
 
 void UGameRule_Clock::Handle_ClockCompleted()

@@ -11,6 +11,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Weapons/Weapon_Base.h"
 #include "Components/SpotLightComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AP_FPS::AP_FPS()
@@ -67,8 +68,33 @@ void AP_FPS::BeginPlay()
 	_MovementComponent->MaxWalkSpeed = _NormalMoveSpeed;
 
 	_FlashlightNormalIntensity = _Flashlight->Intensity;
+	
+	_FlashlightAudioComponent = UGameplayStatics::CreateSound2D(this, _FlashlightToggleSound);
+	_DeadAudioComponent = UGameplayStatics::CreateSound2D(this, _DeadSound);
 }
 
+void AP_FPS::StartPlayingFootstepSounds()
+{
+	PlayFootstepSound();
+	GetWorld()->GetTimerManager().SetTimer(PlayFootstepSoundTimer, this, &AP_FPS::PlayFootstepSound, _FootstepTimeStep, true);
+}
+
+void AP_FPS::PlayFootstepSound()
+{
+	_FootstepAudioComponent = UGameplayStatics::CreateSound2D(this, _FootstepSounds);
+	_FootstepAudioComponent->Play();
+}
+
+void AP_FPS::StopPlayingFootstepSounds()
+{
+	if(_FootstepAudioComponent) { _FootstepAudioComponent->DestroyComponent(); }
+	GetWorld()->GetTimerManager().ClearTimer(PlayFootstepSoundTimer);
+}
+
+void AP_FPS::Input_StartedMove_Implementation(FVector2D value)
+{
+	StartPlayingFootstepSounds();
+}
 
 void AP_FPS::Input_Move_Implementation(FVector2D value)
 {
@@ -76,16 +102,25 @@ void AP_FPS::Input_Move_Implementation(FVector2D value)
 	AddMovementInput(_Camera->GetRightVector(), value.X);
 }
 
+void AP_FPS::Input_MoveCancelled_Implementation(FVector2D value)
+{
+	StopPlayingFootstepSounds();
+}
+
 void AP_FPS::Input_SprintPressed_Implementation()
 {
 	_Stamina2->StartSprinting();
 
 	_MovementComponent->MaxWalkSpeed = _SprintMoveSpeed;
+	GetWorld()->GetTimerManager().ClearTimer(PlayFootstepSoundTimer);
+	GetWorld()->GetTimerManager().SetTimer(PlayFootstepSoundTimer, this, &AP_FPS::PlayFootstepSound, _FootstepTimeStep / 2, true);
 }
 
 void AP_FPS::Input_SprintReleased_Implementation()
 {
 	_Stamina2->StopSprinting(0.1f);
+	GetWorld()->GetTimerManager().ClearTimer(PlayFootstepSoundTimer);
+	GetWorld()->GetTimerManager().SetTimer(PlayFootstepSoundTimer, this, &AP_FPS::PlayFootstepSound, _FootstepTimeStep, true);
 }
 
 void AP_FPS::Input_CrouchPressed_Implementation()
@@ -111,6 +146,10 @@ void AP_FPS::Input_Interact_Implementation()
 void AP_FPS::Input_FlashlightToggle_Implementation(bool isFlashlightOn)
 {
 	_Flashlight->SetIntensity(isFlashlightOn ? _FlashlightNormalIntensity : 0.0f);
+	if(_FlashlightAudioComponent)
+	{
+		_FlashlightAudioComponent->Play();
+	}
 }
 
 void AP_FPS::Input_Look_Implementation(FVector2D value)
@@ -131,18 +170,12 @@ void AP_FPS::Input_JumpReleased_Implementation()
 
 void AP_FPS::Input_FirePressed_Implementation()
 {
-	if(_WeaponRef)
-	{
-		_WeaponRef->StartFire();
-	}
+
 }
 
 void AP_FPS::Input_FireReleased_Implementation()
 {
-	if(_WeaponRef)
-	{
-		_WeaponRef->StopFire();
-	}
+
 }
 
 UInputMappingContext* AP_FPS::GetMappingContext_Implementation()
@@ -186,6 +219,7 @@ AActor* AP_FPS::GetClosest(TArray<FHitResult> hit)
 
 void AP_FPS::Handle_HealthDead(AController* causer)
 {
+	if(_DeadAudioComponent) { _DeadAudioComponent->Play(); }
 	OnPawnDead.Broadcast(causer);
 }
 

@@ -43,8 +43,10 @@ void APC_FPS::SetupInputComponent()
 
 	if(UEnhancedInputComponent* EIP = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
+		EIP->BindAction(_MoveAction, ETriggerEvent::Started, this, &APC_FPS::StartedMove);
 		EIP->BindAction(_MoveAction, ETriggerEvent::Triggered, this, &APC_FPS::Move);
 		EIP->BindAction(_MoveAction, ETriggerEvent::Completed, this, &APC_FPS::Move);
+		EIP->BindAction(_MoveAction, ETriggerEvent::Completed, this, &APC_FPS::MoveCancelled);
 		
 		EIP->BindAction(_SprintAction, ETriggerEvent::Started, this, &APC_FPS::SprintPressed);
 		EIP->BindAction(_SprintAction, ETriggerEvent::Completed, this, &APC_FPS::SprintReleased);
@@ -70,6 +72,18 @@ void APC_FPS::SetupInputComponent()
 	}
 }
 
+void APC_FPS::StartedMove(const FInputActionValue& value)
+{
+	FVector2D MoveVector = value.Get<FVector2D>();
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			IInputable::Execute_Input_StartedMove(currentPawn, MoveVector);
+		}
+	}
+}
+
 void APC_FPS::Move(const FInputActionValue& value)
 {
 	FVector2D MoveVector = value.Get<FVector2D>();
@@ -86,6 +100,18 @@ void APC_FPS::Move(const FInputActionValue& value)
 		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
 		{
 			IInputable::Execute_Input_Move(currentPawn, MoveVector);
+		}
+	}
+}
+
+void APC_FPS::MoveCancelled(const FInputActionValue& value)
+{
+	FVector2D MoveVector = value.Get<FVector2D>();
+	if(APawn* currentPawn = GetPawn())
+	{
+		if(UKismetSystemLibrary::DoesImplementInterface(currentPawn, UInputable::StaticClass()))
+		{
+			IInputable::Execute_Input_MoveCancelled(currentPawn, MoveVector);
 		}
 	}
 }

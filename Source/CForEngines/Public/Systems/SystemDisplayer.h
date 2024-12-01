@@ -31,6 +31,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void PlayAlarmSound();
+	UFUNCTION()
+	void StopAlarmSound();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBoxComponent> _Collider;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -41,6 +46,15 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USystemWidget> _SystemWidgetClass;
 	TObjectPtr<USystemWidget> _SystemWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<USoundBase> _AlarmSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _AlarmSoundWaitTime;
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> _AlarmSoundComponent;
+
+	FTimerHandle _AlarmTimer;
 
 public:
 };

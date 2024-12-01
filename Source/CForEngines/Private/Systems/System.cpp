@@ -14,17 +14,17 @@ USystem::USystem()
 void USystem::Init(ASystem_Controller* owner)
 {
 	_Controller = owner;
-}
-
-void USystem::BeginPlay()
-{
-	Super::BeginPlay();
 	_TimerManager = &GetWorld()->GetTimerManager();
 	_CurrentValue = _MaxValue;
 	_FaultHasStarted = false;
 
 	
 	SetFaultTimer();
+}
+
+void USystem::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void USystem::SetFaultTimer()

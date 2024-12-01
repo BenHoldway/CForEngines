@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "System_Controller.generated.h"
 
+class UPointLightComponent;
 enum ESystemType : int;
 class UBoxComponent;
 class USystem;
@@ -25,6 +26,8 @@ class CFORENGINES_API ASystem_Controller : public AActor, public IInteractable
 public:
 	ASystem_Controller();
 
+	void Init();
+
 	UPROPERTY(BlueprintAssignable)
 	FSystemDepletedSignature OnDepleted;
 	UPROPERTY(BlueprintAssignable)
@@ -40,9 +43,17 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UStaticMeshComponent> _Mesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UPointLightComponent> _Light;
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<USystem> _System;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FLinearColor _NormalColour;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FLinearColor _FaultColour;
 
 	ESystemType _SystemType;
 	

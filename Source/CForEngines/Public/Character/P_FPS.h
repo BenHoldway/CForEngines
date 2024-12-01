@@ -31,7 +31,9 @@ class CFORENGINES_API AP_FPS : public ACharacter, public IInputable
 public:
 	AP_FPS();
 
+	virtual void Input_StartedMove_Implementation(FVector2D value) override;
 	virtual void Input_Move_Implementation(FVector2D value) override;
+	virtual void Input_MoveCancelled_Implementation(FVector2D value) override;
 	virtual void Input_Look_Implementation(FVector2D value) override;
 	virtual void Input_JumpPressed_Implementation() override;
 	virtual void Input_JumpReleased_Implementation() override;
@@ -112,16 +114,36 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AActor* _Interactable;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<USoundBase> _FootstepSounds;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _FootstepTimeStep;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<USoundBase> _FlashlightToggleSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<USoundBase> _DeadSound;
+	
+	FTimerHandle PlayFootstepSoundTimer;
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> _FootstepAudioComponent;
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> _FlashlightAudioComponent;
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> _DeadAudioComponent;
 	
 	FTimerHandle _CrouchTimer;
 
 	float _FlashlightNormalIntensity;
 
 	void BeginPlay() override;
-	/*void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
-	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
-	virtual void CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult) override;
-	void LerpCrouchCamera();*/
+
+	void StartPlayingFootstepSounds();
+	UFUNCTION()
+	void PlayFootstepSound();
+	void StopPlayingFootstepSounds();
 
 private:
 	UFUNCTION()

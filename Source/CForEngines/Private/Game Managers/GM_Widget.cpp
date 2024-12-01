@@ -13,8 +13,8 @@ void UGM_Widget::NativeConstruct()
 	if(WinScreen) { WinScreen->SetVisibility(ESlateVisibility::Hidden); }
 	if(LoseScreen) { LoseScreen->SetVisibility(ESlateVisibility::Hidden); }
 
-	if(WinScreenReplayButton) { WinScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
-	if(LoseScreenReplayButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
+	if(WinScreenReplayButton) { WinScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ReplayGame); }
+	if(LoseScreenReplayButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ReplayGame); }
 	if(PlayGameButton) { PlayGameButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
 	if(ExitGameButton) { ExitGameButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ExitGame); }
 	if(MainMenuButton) { MainMenuButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ShowMainMenu); }
@@ -53,6 +53,12 @@ void UGM_Widget::ShowLoseScreen()
 }
 
 void UGM_Widget::PlayGame()
+{
+	OnPlay.Broadcast();
+	HideMainMenu();
+}
+
+void UGM_Widget::ReplayGame()
 {
 	OnReplay.Broadcast();
 }

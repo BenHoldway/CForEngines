@@ -19,7 +19,13 @@ class CFORENGINES_API IInputable
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Input_StartedMove(FVector2D value);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Input_Move(FVector2D value);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Input_MoveCancelled(FVector2D value);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Input_SprintPressed();

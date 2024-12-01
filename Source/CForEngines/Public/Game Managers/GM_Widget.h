@@ -7,6 +7,7 @@
 class UButton;
 class UCanvasPanel;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayGameSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FReplayGameSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUnpauseGameSignature);
 
@@ -19,6 +20,7 @@ public:
 	virtual void NativeConstruct() override;
 	UFUNCTION()
 	void ShowMainMenu();
+	UFUNCTION()
 	void HideMainMenu();
 
 	void ShowPauseMenu();
@@ -30,8 +32,11 @@ public:
 	UFUNCTION()
 	void PlayGame();
 	UFUNCTION()
+	void ReplayGame();
+	UFUNCTION()
 	void ExitGame();
 
+	FPlayGameSignature OnPlay;
 	FReplayGameSignature OnReplay;
 	FUnpauseGameSignature OnUnpause;
 

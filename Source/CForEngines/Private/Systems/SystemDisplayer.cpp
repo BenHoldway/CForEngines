@@ -1,8 +1,10 @@
 #include "Systems/SystemDisplayer.h"
 
+#include "Components/AudioComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Systems/SystemWidget.h"
 
 ASystemDisplayer::ASystemDisplayer()
@@ -26,7 +28,23 @@ void ASystemDisplayer::BeginPlay()
 	_SystemWidget = Cast<USystemWidget>(_SystemWidgetComponent->GetUserWidgetObject());
 	_SystemWidget->NativeConstruct();
 
+	_SystemWidget->OnPlayAlarmSound.AddUniqueDynamic(this, &ASystemDisplayer::PlayAlarmSound);
+	_SystemWidget->OnStopAlarmSound.AddUniqueDynamic(this, &ASystemDisplayer::StopAlarmSound);
+
 	OnRegister.Broadcast(this);
+}
+
+void ASystemDisplayer::PlayAlarmSound()
+{
+	_AlarmSoundComponent = UGameplayStatics::CreateSound2D(this, _AlarmSound);
+	_AlarmSoundComponent->Play();
+	GetWorld()->GetTimerManager().SetTimer(_AlarmTimer, this, &ASystemDisplayer::PlayAlarmSound, _AlarmSoundWaitTime);
+}
+
+void ASystemDisplayer::StopAlarmSound()
+{
+	if(_AlarmSoundComponent) { _AlarmSoundComponent->DestroyComponent(); }
+	GetWorld()->GetTimerManager().ClearTimer(_AlarmTimer);
 }
 
 void ASystemDisplayer::UpdatePower(float max, float current)

@@ -9,6 +9,9 @@ class UTextBlock;
 class UImage;
 class UProgressBar;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayAlarmSoundSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStopAlarmSoundSignature);
+
 UCLASS(Abstract, BlueprintType)
 class CFORENGINES_API USystemWidget : public UUserWidget
 {
@@ -23,6 +26,9 @@ public:
 	void StopOxygenAlarm();
 
 	void UpdateClock(int hours, int minutes);
+
+	FPlayAlarmSoundSignature OnPlayAlarmSound;
+	FStopAlarmSoundSignature OnStopAlarmSound;
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -39,6 +45,8 @@ protected:
 	FLinearColor _AlarmNormalColour;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FLinearColor _AlarmLitColour;
+
+	bool _IsPlayingAlarmSound;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> Clock;

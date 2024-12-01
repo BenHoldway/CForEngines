@@ -18,23 +18,11 @@ void AGM_FPS::BeginPlay()
 	_PlayerSpawnIndex = 0;
 	_EnemySpawnIndex = 0;
 
-	UWorld* world = GetWorld();
-	if(world == nullptr || _EnemyControllerClass == nullptr) { return; }
-
-	FActorSpawnParameters spawnParams;
-	spawnParams.Owner = GetOwner();
-	spawnParams.Instigator = GetInstigator();
-	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-	FVector location(0, 0, 0);
-	FRotator rotation = FRotator::ZeroRotator;
-	
-	world->SpawnActor(_EnemyControllerClass, &location, &rotation, spawnParams);
-
 	if(_GMWidgetClass)
 	{
 		_GMWidget = CreateWidget<UGM_Widget, UWorld*>(GetWorld(), _GMWidgetClass);
 		_GMWidget->AddToViewport();
+		_GMWidget->OnPlay.AddUniqueDynamic(this, &AGM_FPS::StartGame);
 		_GMWidget->OnReplay.AddUniqueDynamic(this, &AGM_FPS::ReplayGame);
 		_GMWidget->OnUnpause.AddUniqueDynamic(this, &AGM_FPS::UnpauseGame);
 	}
@@ -96,6 +84,28 @@ void AGM_FPS::Logout(AController* Exiting)
 	Super::Logout(Exiting);
 }
 
+void AGM_FPS::StartGame()
+{
+	UWorld* world = GetWorld();
+	if(world == nullptr || _EnemyControllerClass == nullptr) { return; }
+
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = GetOwner();
+	spawnParams.Instigator = GetInstigator();
+	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+	FVector location(0, 0, 0);
+	FRotator rotation = FRotator::ZeroRotator;
+	
+	world->SpawnActor(_EnemyControllerClass, &location, &rotation, spawnParams);
+
+	UnpauseGame();
+	for(UGameRule* rule : _GameRuleManagers)
+	{
+		rule->Init();
+	}
+}
+
 void AGM_FPS::HandleMatchIsWaitingToStart()
 {
 	TArray<UActorComponent*> outComponents;
@@ -105,7 +115,6 @@ void AGM_FPS::HandleMatchIsWaitingToStart()
 		if(UGameRule* rule = Cast<UGameRule>(comp))
 		{
 			_GameRuleManagers.Add(rule);
-			rule->Init();
 			rule->OnComplete.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRuleCompleted);
 			rule->OnPointsScored.AddUniqueDynamic(this, &AGM_FPS::Handle_GameRulePointsScored);
 			_GameRulesLeft++;
