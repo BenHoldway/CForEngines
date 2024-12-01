@@ -49,3 +49,8 @@ void ASystemDisplayer::StopOxygenAlarm()
 	_SystemWidget->StopOxygenAlarm();
 }
 
+void ASystemDisplayer::UpdateClock(int hours, int minutes)
+{
+	_SystemWidget->UpdateClock(hours, minutes);
+}
+

@@ -82,14 +82,14 @@ void USystemWidget::UpdateClock(int hours, int minutes)
 	{
 		FString clockText;
 		if(hours == 0) { clockText = TEXT("12"); }
-		else { clockText = TEXT("%d", hours); }
+		else { clockText = FString::Printf(TEXT("%d"), hours); }
 
-		if(minutes < 10) { clockText += TEXT(" : 0%d", minutes); }
-		else { clockText += TEXT(" : %d", minutes); }
+		if(minutes < 10) { clockText += FString::Printf(TEXT(" : 0%d"), minutes); }
+		else { clockText += FString::Printf(TEXT(" : %d"), minutes); }
 		
 		Clock->SetText(
 			FText::FromString(
-				FString::Printf(clockText)
+				FString::Printf(TEXT("%s"), *clockText)
 			)
 		);
 	}

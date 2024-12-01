@@ -26,6 +26,7 @@ public:
 	void UpdateOxygen(float max, float current);
 	void StopPowerAlarm();
 	void StopOxygenAlarm();
+	void UpdateClock(int hours, int minutes);
 
 protected:
 	virtual void BeginPlay() override;

@@ -33,8 +33,7 @@ void APC_FPS::BeginPlay()
 	}
 
 	_IsFlashlightOn = true;
-	SetInputMode(FInputModeGameOnly());
-	SetShowMouseCursor(false);
+	DisablePlayerInput_Implementation();
 }
 
 

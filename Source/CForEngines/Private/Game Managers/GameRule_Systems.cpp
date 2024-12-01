@@ -103,5 +103,5 @@ void UGameRule_Systems::Handle_SystemStateChanged(ASystem_Controller* systemCont
 
 void UGameRule_Systems::UpdateClock(int hours, int minutes)
 {
-	_SystemDisplay->Up
+	_SystemDisplay->UpdateClock(hours, minutes);
 }

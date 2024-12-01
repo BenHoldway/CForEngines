@@ -12,30 +12,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="808c6186-484e-4ea1-a740-69a96deaa721" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/CForEngines/Sounds/MainMenuAmbience.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CForEngines/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CForEngines/WBP_GMWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CForEngines/WBP_GMWidget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Credits.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Credits.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/PC_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Character/P_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_FPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_Widget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GM_Widget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Clock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Clock.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Game Managers/GameRule_Systems.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemDisplayer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/SystemWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Private/Systems/System_Controller.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Controllable.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/Components/Controllable.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/PC_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Character/P_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_FPS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_Widget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GM_Widget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Clock.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Clock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Game Managers/GameRule_Systems.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemDisplayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemDisplayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/SystemWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CForEngines/Public/Systems/System_Controller.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +66,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "C++ Project.CForEngines.executor": "Debug",
+    "C++ Project.CForEngines.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "EnemyAI",
     "ignore.virus.scanning.warn.message": "true",
@@ -91,6 +77,13 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\h019546n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\h019546n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\h019546n\\AppData\\Local\\Symbols\\src"
+    ]
   }
 }]]></component>
   <component name="RunManager" selected="C++ Project.CForEngines">
@@ -275,6 +268,18 @@
         <option name="USE_EXTERNAL_CONSOLE" value="0" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="AUTO_DETECT" />
       </configuration_15>
+      <configuration_16>
+        <option name="CONFIGURATION" value="" />
+        <option name="PLATFORM" value="" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/CForEngines.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(TargetPath)" />
+        <option name="PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$(ProjectDir)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="AUTO_DETECT" />
+      </configuration_16>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/CForEngines.vcxproj" />
       <option name="AUTO_SELECT_PRIORITY" value="10010" />
       <method v="2">
@@ -562,6 +567,7 @@
       <workItem from="1732614789335" duration="741000" />
       <workItem from="1732615557327" duration="45682000" />
       <workItem from="1732971832148" duration="16493000" />
+      <workItem from="1733060234084" duration="2595000" />
     </task>
     <servers />
   </component>

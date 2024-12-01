@@ -15,8 +15,8 @@ void UGM_Widget::NativeConstruct()
 
 	if(WinScreenReplayButton) { WinScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
 	if(LoseScreenReplayButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
-	if(PlayGameButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
-	if(ExitGameButton) { LoseScreenReplayButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ExitGame); }
+	if(PlayGameButton) { PlayGameButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::PlayGame); }
+	if(ExitGameButton) { ExitGameButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ExitGame); }
 	if(MainMenuButton) { MainMenuButton->OnClicked.AddUniqueDynamic(this, &UGM_Widget::ShowMainMenu); }
 }
 
