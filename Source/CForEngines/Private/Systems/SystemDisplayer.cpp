@@ -14,9 +14,6 @@ ASystemDisplayer::ASystemDisplayer()
 	_Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	RootComponent = _Collider;
 
-	_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	_Mesh -> SetupAttachment(RootComponent);
-
 	_SystemWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("System Widget"));
 	_SystemWidgetComponent->SetupAttachment(_Collider);
 }
